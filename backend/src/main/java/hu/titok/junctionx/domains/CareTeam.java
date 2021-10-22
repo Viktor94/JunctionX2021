@@ -1,2 +1,3 @@
-package hu.titok.junctionx.domains;public class CareTeam {
-}
+package hu.titok.junctionx.domains;
+
+public class CareTeam {}

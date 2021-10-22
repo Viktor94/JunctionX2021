@@ -15,12 +15,11 @@ import java.util.List;
 @NoArgsConstructor
 public class Patient extends User {
 
-  private Long age;
-  private Long weightBeforeTreatment;
+  @ManyToMany private List<User> careTakerList;
+  @OneToMany private List<CarePlanForm> carePlanFormList;
 
-  @OneToMany private List<Weight> weights;
-
-  @ManyToMany private List<Illness> illnessList;
-
-  @ManyToMany private List<CareTaker> careTakerList;
+  private String primaryCareProvider;
+  private String surgeon;
+  private String radiationOncologist;
+  private String medicalOncologist;
 }
