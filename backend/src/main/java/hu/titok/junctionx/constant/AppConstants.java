@@ -3,6 +3,7 @@ package hu.titok.junctionx.constant;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 public class AppConstants {
+
     private AppConstants() {}
 
     public static final String APP_BASE_URL =

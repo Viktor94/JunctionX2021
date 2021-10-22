@@ -24,10 +24,11 @@ public class Patient extends User {
   private String radiationOncologist;
   private String medicalOncologist;
   private Priority priority;
+  
   private String relativeName;
   private String relativePhoneNumber;
   private String relativeEmail;
 
-  @OneToMany
-  private List<Question> questions;
+
+  @OneToMany private List<Question> questions;
 }
