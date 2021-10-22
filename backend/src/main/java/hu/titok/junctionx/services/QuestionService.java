@@ -4,5 +4,5 @@ import hu.titok.junctionx.domains.Question;
 import org.springframework.stereotype.Service;
 
 @Service
-public interface QuestionService extends GenericService<Question> {
+public interface QuestionService {
 }

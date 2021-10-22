@@ -4,6 +4,6 @@ import hu.titok.junctionx.domains.User;
 import org.springframework.stereotype.Service;
 
 @Service
-public interface UserService extends GenericService<User> {
+public interface UserService  {
 
 }
