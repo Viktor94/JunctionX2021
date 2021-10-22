@@ -27,5 +27,4 @@ public class CarePlanForm {
 
     @OneToMany
     private List<Answer> answers;
-
 }
