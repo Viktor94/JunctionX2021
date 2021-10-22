@@ -1,4 +1,3 @@
-import { lightBlue as primary } from '@mui/material/colors'
 import { createTheme, ThemeProvider as MuiThemeProvider } from '@mui/material/styles'
 
 const theme = createTheme({
@@ -6,7 +5,7 @@ const theme = createTheme({
     fontSize: 16,
   },
   palette: {
-    primary: { ...primary, contrastText: '#fff' },
+    primary: { main: '#0c6e3e' },
   },
   shape: {
     borderRadius: 10,

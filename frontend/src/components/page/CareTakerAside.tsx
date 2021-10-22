@@ -2,7 +2,7 @@ import { Box, Drawer, List, ListItemButton, ListItemText, Typography } from '@mu
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-export const CARE_TAKER_ASIDE_WIDTH = 240
+export const CARE_TAKER_ASIDE_WIDTH = 320
 
 export const CareTakerAside: React.FC = () => {
   return (

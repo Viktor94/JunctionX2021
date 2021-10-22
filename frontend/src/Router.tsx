@@ -1,5 +1,6 @@
 import { CareTakerAddPatientPage } from 'pages/CareTakerAddPatientPage/CareTakerAddPatientPage'
 import { CareTakerPatientPage } from 'pages/CareTakerPatientPage/CareTakerPatientPage'
+import { CareTakerQuestionaryResultPage } from 'pages/CareTakerQuestionaryResultPage/CareTakerQuestionaryResultPage'
 import { PatientLogInPage } from 'pages/PatientLogInPage'
 import React from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
@@ -16,7 +17,8 @@ export const Router: React.FC = () => {
         <Route path="/login" exact render={() => <PatientLogInPage />} />
         <Route path="/admin" exact render={() => <CareTakerHomePage />} />
         <Route path="/admin/add" exact render={() => <CareTakerAddPatientPage />} />
-        <Route path="/admin/:id" exact render={() => <CareTakerPatientPage />} />
+        <Route path="/admin/:id/:questionaryId" render={() => <CareTakerQuestionaryResultPage />} />
+        <Route path="/admin/:id" render={() => <CareTakerPatientPage />} />
       </Switch>
     </BrowserRouter>
   )

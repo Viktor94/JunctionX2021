@@ -1,6 +1,6 @@
 body {
   margin: 0;
-  background-color: #eeeeee;
+  background-color: #eeeeee !important;
 }
 
 .MuiOutlinedInput-root fieldset {
