@@ -1,6 +1,5 @@
-package hu.titok.junctionx.service.authentication;
+package hu.titok.junctionx.services.authentication;
 
-import hu.titok.junctionx.domains.RegistrationToken;
 import hu.titok.junctionx.payload.RegistrationPayload;
 import org.springframework.stereotype.Service;
 

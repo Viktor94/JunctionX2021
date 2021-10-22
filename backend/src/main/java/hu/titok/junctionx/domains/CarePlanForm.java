@@ -5,19 +5,27 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.OffsetDateTime;
+import java.util.List;
 
 @Entity
 @Getter
 @Setter
 public class CarePlanForm {
 
-  @Id @GeneratedValue private Long id;
-  @ManyToOne private Patient patient;
+    @Id
+    @GeneratedValue
+    private Long id;
+    @ManyToOne
+    private Patient patient;
 
-  @ManyToOne
-  @JoinColumn(name = "bloodpressure_ID")
-  private BloodPressure bloodpressure;
+    private Integer systolic;
+    private Integer diastolic;
+    private Integer pulse;
+    private OffsetDateTime dateOfSubmit;
+    private Integer weight;
+    private String longAnswer;
 
-  private OffsetDateTime dateOfSubmit;
-  private Integer weight;
+    @OneToMany
+    private List<Question> questions;
+
 }

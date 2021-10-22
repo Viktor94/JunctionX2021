@@ -1,4 +1,4 @@
-package hu.titok.junctionx.service.email;
+package hu.titok.junctionx.services.email;
 
 import hu.titok.junctionx.constant.AppConstants;
 import hu.titok.junctionx.domains.RegistrationToken;

@@ -1,0 +1,25 @@
+package hu.titok.junctionx.domains.enums;
+
+public enum Symptom {
+    HEADACHE,
+    SKIN_CHANGE,
+    FATIGUE,
+    DRY_MOUTH,
+    DIFFICULT_SWALLOWING,
+    JAW_STIFFNESS,
+    HAIR_LOSS,
+    TOOTH_DECAY,
+    BREATH_SHORTNESS,
+    SHOULDER_STIFFNESS,
+    COUGH,
+    FEVER,
+    LOSS_OF_APETITE,
+    VOMITING,
+    BOWEL_CRAMPING,
+    DIARRHEA,
+    RECTAL_BLEEDING,
+    INCONTINENCE,
+    BLADDER_IRRITATION,
+    SEXUAL_PROBLEMS,
+    FERTILITY
+}
