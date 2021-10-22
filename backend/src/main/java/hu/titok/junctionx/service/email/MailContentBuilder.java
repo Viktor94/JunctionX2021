@@ -20,7 +20,7 @@ public class MailContentBuilder {
 
     public String generateRegistrationEmail(RegistrationToken registrationToken) {
         var context = new Context();
-        context.setVariable("name", registrationToken.getUser().getName());
+        context.setVariable("name", registrationToken.getUser().getFullName());
         var sb = new StringBuilder();
         sb
                 .append(AppConstants.FRONTEND_BASE_URL)
