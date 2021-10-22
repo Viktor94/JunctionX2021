@@ -20,7 +20,7 @@ public class AlarmProcess {
 
     private Symptom symptom;
 
-    private CancerType typeOfCancer;
+    private CancerType cancerType;
 
     private int frequency;
 

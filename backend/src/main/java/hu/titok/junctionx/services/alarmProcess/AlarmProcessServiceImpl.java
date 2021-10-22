@@ -1,5 +1,6 @@
 package hu.titok.junctionx.services.alarmProcess;
 
+import hu.titok.junctionx.domains.User;
 import hu.titok.junctionx.domains.enums.CancerType;
 import hu.titok.junctionx.domains.enums.Symptom;
 import hu.titok.junctionx.repositories.AlarmProcessRepository;
@@ -20,7 +21,7 @@ public class AlarmProcessServiceImpl implements AlarmProcessService {
     }
 
     @Override
-    public String manageSymptom(CancerType cancerType, Symptom symptom, long number) {
+    public String manageSymptom(User user, CancerType cancerType, Symptom symptom, long number) {
         return null;
     }
 }
