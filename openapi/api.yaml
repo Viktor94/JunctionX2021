@@ -1,0 +1,170 @@
+openapi: 3.0.3
+info:
+  title: FollowUp
+  description: FollowUp
+  version: 1.0.0
+paths:
+  /patient/register:
+    post:
+      tags:
+        - patient
+      description: 'This is a method for the caretakers to register a patient'
+      operationId: registerPatient
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatientRegistrationRequest'
+      responses:
+        201:
+          description: Created
+  /patient/{patientId}/submit-data:
+    post:
+      tags:
+        - patient
+      description: Patients use this method to post data about their physical and mental health
+      operationId: submitPatientData
+      parameters:
+        - name: patientId
+          in: path
+          description: The patient's id
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatientHealthData'
+      responses:
+        202:
+          description: Accepted
+components:
+  schemas:
+    PatientRegistrationRequest:
+      type: object
+      properties:
+        generalInformation:
+          $ref: '#/components/schemas/GeneralPatientInformation'
+        treatmentSummary:
+          $ref: '#/components/schemas/TreatmentSummary'
+    PatientHealthData:
+      type: object
+      properties:
+        healthDescription:
+          type: string
+          description: A free text description of the patient's health
+    GeneralPatientInformation:
+      type: object
+      properties:
+        patientName:
+          type: string
+          description: Name of the patient
+        birthDate:
+          type: string
+          format: date
+          description: Birth date of the patient
+        phoneNumber:
+          type: string
+          description: The phone number of the patient
+        email:
+          type: string
+          description: The email address of the patient
+        homeAddress:
+          type: string
+          description: Home address of the patient
+        contactPersonPhoneNumber:
+          type: string
+          description: Phone number of a person that can check up on the patient
+    TreatmentSummary:
+      type: object
+      properties:
+        cancerType:
+          type: string
+          description: Type, location, histology subtype of the cancer
+        diagnosisYear:
+          type: integer
+          description: The year the cancer was diagnosed
+        stage:
+          type: string
+          description: Cancer stage
+        persistentSymptomsAfterTreatment:
+          type: array
+          items:
+            type: string
+        surgicalTreatment:
+          $ref: '#/components/schemas/SurgicalTreatment'
+        radiationTreatment:
+          $ref: '#/components/schemas/RadiationTreatment'
+        systemicTreatment:
+          $ref: '#/components/schemas/SystemicTreatment'
+        otherHealthcareProviders:
+          type: array
+          items:
+            $ref: '#/components/schemas/HealthcareProviderInfo'
+    SurgicalTreatment:
+      type: object
+      properties:
+        surgeon:
+          $ref: '#/components/schemas/HealthcareProviderInfo'
+        procedures:
+          type: array
+          items:
+            $ref: '#/components/schemas/SurgicalProcedure'
+    RadiationTreatment:
+      type: object
+      properties:
+        radiationOncologist:
+          $ref: '#/components/schemas/HealthcareProviderInfo'
+        treatedBodyArea:
+          type: string
+          description: The patients body area that was treated
+        treatmentEndYear:
+          type: integer
+          description: The year when the radiation treatment ended
+    SystemicTreatment:
+      type: object
+      properties:
+        medicalOncologist:
+          $ref: '#/components/schemas/HealthcareProviderInfo'
+        usedAgents:
+          type: array
+          items:
+            $ref: '#/components/schemas/SystemicAgent'
+    SurgicalProcedure:
+      type: object
+      properties:
+        surgeryYear:
+          type: integer
+          description: The year when the surgery was performed
+        procedureName:
+          type: string
+          description: Name of the surgical procedure
+        location:
+          type: string
+          description: Where on the patients body was the surgery performed
+        findings:
+          type: string
+          description: Outcome of the surgery
+    SystemicAgent:
+      type: object
+      properties:
+        agent:
+          type: string
+          description: The name of the used agent
+        usageEndYear:
+          type: integer
+          description: The year when usage of the agent was finished
+    HealthcareProviderInfo:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the healthcare provider
+        institution:
+          type: string
+          description: Name of the healthcare institution
+

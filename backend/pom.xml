@@ -103,7 +103,7 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <inputSpec>${project.basedir}/src/main/resources/api.yaml</inputSpec>
+                            <inputSpec>${project.basedir}/../openapi/api.yaml</inputSpec>
                             <modelPackage>hu.titok.junctionx.payload</modelPackage>
                             <apiPackage>hu.titok.junctionx.api</apiPackage>
                             <language>spring</language>
