@@ -7,8 +7,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.List;
 
 @Entity
 @Getter
@@ -22,12 +20,10 @@ public class AlarmProcess {
 
     private Symptom symptom;
 
-    private CancerType typeOfCancer;
+    private CancerType cancerType;
 
     private int frequency;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "instruction", joinColumns = @JoinColumn(name = "id"))
     @Enumerated(EnumType.STRING)
-    private List<Instruction> instructions;
+    private Instruction instructions;
 }
