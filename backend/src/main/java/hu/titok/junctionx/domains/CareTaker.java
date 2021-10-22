@@ -1,13 +1,16 @@
 package hu.titok.junctionx.domains;
 
-import javax.persistence.Entity;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.ManyToMany;
 import java.util.List;
 
-@Entity
-public class CareTaker extends User{
+@NoArgsConstructor
+@Getter
+@Setter
+public class CareTaker extends User {
 
-    @ManyToMany
-    private List<Patient> patientList;
-    private String password;
+  @ManyToMany private List<User> patientList;
 }

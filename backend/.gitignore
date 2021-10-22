@@ -21,6 +21,7 @@ target/
 /.idea/
 .idea/*
 out/
+backend/.jpb/
 
 ### NetBeans ###
 /nbproject/private/
