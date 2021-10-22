@@ -135,6 +135,10 @@ export const AddPatientForm: React.FC<AddPatientFormProps> = () => {
               </Button>
             </div>
           </FormControl>
+
+          <Button variant="contained" size="large">
+            Save Patient
+          </Button>
         </Stack>
       </form>
     </>
