@@ -1,6 +1,7 @@
 package hu.titok.junctionx.services.email;
 
 import hu.titok.junctionx.configuration.AppProperties;
+import hu.titok.junctionx.domains.Patient;
 import hu.titok.junctionx.domains.RegistrationToken;
 import hu.titok.junctionx.domains.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,12 +41,14 @@ public class EmailSenderServiceImpl implements EmailSenderService {
   @Async
   @Override
   public void sendNotificationEmail(Locale locale, User user, List<String> messages) {
-    String msg = mailContentBuilder.generateNotificationEmail(user, messages);
-    mailSenderHelper.sendComplexMail(
-        new String[] {user.getEmail()},
-        appProperties.getEmail().getSenderEmail(),
-        getMessageByLanguage("mail.note.subject", locale),
-        msg);
+    if(user instanceof Patient) {
+      String msg = mailContentBuilder.generateNotificationEmail(user, messages);
+      mailSenderHelper.sendComplexMail(
+              new String[] {user.getEmail(), ((Patient) user).getRelativeEmail()},
+              appProperties.getEmail().getSenderEmail(),
+              getMessageByLanguage("mail.note.subject", locale),
+              msg);
+    }
   }
 
   private String getMessageByLanguage(String key, Locale language) {
