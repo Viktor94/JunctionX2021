@@ -4,5 +4,5 @@ public enum Instruction {
     SEND_EMAIL,
     GIVE_ADVICE,
     NOTIFY_CARE_TEAM,
-    NOTIFY_FAMILY;
+    NOTIFY_RELATIVE;
 }
