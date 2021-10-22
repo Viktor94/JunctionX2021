@@ -1,7 +1,7 @@
-package hu.titok.junctionx.controller;
+package hu.titok.junctionx.controllers;
 
 import hu.titok.junctionx.payload.RegistrationPayload;
-import hu.titok.junctionx.service.authentication.AuthenticationService;
+import hu.titok.junctionx.services.authentication.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,11 +1,11 @@
-package hu.titok.junctionx.service.token.registration;
+package hu.titok.junctionx.services.token.registration;
 
 import hu.titok.junctionx.domains.RegistrationToken;
 import hu.titok.junctionx.domains.User;
-import hu.titok.junctionx.exception.AppErrorCode;
-import hu.titok.junctionx.exception.InvalidTokenException;
-import hu.titok.junctionx.repository.RegistrationTokenRepository;
-import hu.titok.junctionx.service.token.TokenService;
+import hu.titok.junctionx.exceptions.AppErrorCode;
+import hu.titok.junctionx.exceptions.InvalidTokenException;
+import hu.titok.junctionx.repositories.RegistrationTokenRepository;
+import hu.titok.junctionx.services.token.TokenService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

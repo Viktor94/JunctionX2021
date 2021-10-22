@@ -1,7 +1,7 @@
-package hu.titok.junctionx.service.token;
+package hu.titok.junctionx.services.token;
 
 import hu.titok.junctionx.domains.User;
-import hu.titok.junctionx.exception.InvalidTokenException;
+import hu.titok.junctionx.exceptions.InvalidTokenException;
 
 import java.util.Optional;
 

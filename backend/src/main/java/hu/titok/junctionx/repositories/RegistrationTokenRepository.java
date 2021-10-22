@@ -1,4 +1,4 @@
-package hu.titok.junctionx.repository;
+package hu.titok.junctionx.repositories;
 
 import hu.titok.junctionx.domains.RegistrationToken;
 import hu.titok.junctionx.domains.User;

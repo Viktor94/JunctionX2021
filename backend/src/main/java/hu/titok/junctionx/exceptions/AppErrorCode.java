@@ -1,4 +1,4 @@
-package hu.titok.junctionx.exception;
+package hu.titok.junctionx.exceptions;
 
 
 import lombok.Getter;
