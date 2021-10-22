@@ -16,11 +16,11 @@ public class UserController {
   }
 
   @PostMapping
-  public ResponseEntity<?> addUser (){
-    userService.save(new Patient("asd","asd","asd","asd"));
+  public ResponseEntity<?> addUser(@RequestBody Patient patient) {
+    userService.save(patient);
 
     return ResponseEntity.ok().build();
-  };
+  }
 
   @GetMapping("/{userID}")
   public ResponseEntity<?> getCarePlanForm(@PathVariable Long userID) {

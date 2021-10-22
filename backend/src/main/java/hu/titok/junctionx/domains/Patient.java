@@ -31,8 +31,8 @@ public class Patient extends User {
 
   @OneToMany private List<Question> questions;
 
-  public Patient(String asd, String asd1, String asd2, String asd3) {
-    super(asd, asd1, asd2, asd3);
+  public Patient(String email, String password, String fullName, String phoneNumber) {
+    super(email, password, fullName, phoneNumber);
   }
 
   public Patient() {
