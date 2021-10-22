@@ -1,11 +1,13 @@
+import { ThemeProvider } from 'lib/theme'
 import React from 'react'
+import { Router } from './Router'
 
 interface AppProps {}
 
 export const App: React.FC<AppProps> = () => {
   return (
-    <div>
-      <h1>hello</h1>
-    </div>
+    <ThemeProvider>
+      <Router />
+    </ThemeProvider>
   )
 }
