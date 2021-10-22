@@ -82,6 +82,8 @@ components:
     TreatmentSummary:
       type: object
       properties:
+        primaryHealthcareProvider:
+          $ref: '#/components/schemas/HealthcareProviderInfo'
         cancerType:
           type: string
           description: Type, location, histology subtype of the cancer
