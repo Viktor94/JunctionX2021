@@ -17,3 +17,7 @@ spring:
 app:
   auth:
     tokenSecret: "mogyika"
+  email:
+    emailUsername: ${EMAIL_USERNAME}
+    emailPassword: ${EMAIL_PASSWORD}
+    senderEmail: "info@ateam.com"
