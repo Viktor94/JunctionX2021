@@ -2,10 +2,13 @@ package hu.titok.junctionx.services.email;
 
 import hu.titok.junctionx.constant.AppConstants;
 import hu.titok.junctionx.domains.RegistrationToken;
+import hu.titok.junctionx.domains.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
+
+import java.util.List;
 
 @Service
 public class MailContentBuilder {
@@ -29,5 +32,16 @@ public class MailContentBuilder {
         context.setVariable("registrationUrl", sb.toString());
 
         return templateEngine.process("registrationEmail",context);
+    }
+
+    public String generateNotificationEmail(User user, List<String> messages) {
+        var context = new Context();
+        context.setVariable("name", user.getFullName());
+        var sb = new StringBuilder();
+        sb.append(String.join(" " ,messages));
+
+        context.setVariable("messages", sb.toString());
+
+        return templateEngine.process("notificationEmail", context);
     }
 }
