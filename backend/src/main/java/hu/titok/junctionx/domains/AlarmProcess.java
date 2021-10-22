@@ -3,6 +3,7 @@ package hu.titok.junctionx.domains;
 import hu.titok.junctionx.domains.enums.CancerType;
 import hu.titok.junctionx.domains.enums.Instruction;
 import hu.titok.junctionx.domains.enums.Symptom;
+import hu.titok.junctionx.domains.enums.Urgency;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -26,4 +27,9 @@ public class AlarmProcess {
 
     @Enumerated(EnumType.STRING)
     private Instruction instructions;
+
+    @Enumerated(EnumType.STRING)
+    private Urgency urgency;
+
+    private String instruction;
 }

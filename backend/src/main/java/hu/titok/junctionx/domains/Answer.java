@@ -19,3 +19,4 @@ public class Answer {
 
     private Boolean response;
 }
+
