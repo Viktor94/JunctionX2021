@@ -9,7 +9,7 @@ const theme = createTheme({
     primary: { ...primary, contrastText: '#fff' },
   },
   shape: {
-    borderRadius: 4,
+    borderRadius: 10,
   },
   components: {
     MuiOutlinedInput: {

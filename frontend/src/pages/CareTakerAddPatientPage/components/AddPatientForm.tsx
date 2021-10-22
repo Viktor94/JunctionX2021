@@ -2,6 +2,7 @@ import {
   Box,
   Button,
   Checkbox,
+  Collapse,
   Divider,
   FormControlLabel,
   FormHelperText,
@@ -67,57 +68,45 @@ export const AddPatientForm: React.FC<AddPatientFormProps> = () => {
               ))}
             </Select>
           </FormControl>
-          <Stack spacing={1}>
-            <FormControlLabel control={<Checkbox defaultChecked />} label="Had surgery" />
-            <Box pl={5} borderLeft="solid 1px #0000001f">
-              <Stack spacing={4}>
-                <FormControl>
-                  <FormLabel>Year of surgery</FormLabel>
-                  <Select value={2021}>
-                    {YEARS.map((year) => (
-                      <MenuItem key={year} value={year}>
-                        {year}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-                <TextField id="phone" label="Surgical procedure/location/findings" multiline rows={3} />
-              </Stack>
-            </Box>
-          </Stack>
-          <Stack spacing={1}>
-            <FormControlLabel control={<Checkbox defaultChecked />} label="Radiation" />
-            <Box pl={5} borderLeft="solid 1px #0000001f">
-              <Stack spacing={4}>
-                <TextField id="phone" label="Body area treated" />
-                <FormControl>
-                  <FormLabel>End year</FormLabel>
-                  <Select value={2021}>
-                    {YEARS.map((year) => (
-                      <MenuItem key={year} value={year}>
-                        {year}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              </Stack>
-            </Box>
-          </Stack>
-          <Stack spacing={1}>
-            <FormControlLabel
-              control={<Checkbox defaultChecked />}
-              label="Systemic Therapy (chemotherapy, hormonal therapy, other)"
-            />
-            <Box pl={5} borderLeft="solid 1px #0000001f">
-              <Stack>
-                <FormControlLabel control={<Checkbox />} label="Carboplatin" />
-                <FormControlLabel control={<Checkbox />} label="Cisplatin " />
-                <FormControlLabel control={<Checkbox />} label="Etoposide" />
-                <FormControlLabel control={<Checkbox />} label="Paclitaxel" />
-                <FormControlLabel control={<Checkbox />} label="Vincristine" />
-              </Stack>
-            </Box>
-          </Stack>
+          <Toogleable label="Had surgery">
+            <Stack spacing={4}>
+              <FormControl>
+                <FormLabel>Year of surgery</FormLabel>
+                <Select value={2021}>
+                  {YEARS.map((year) => (
+                    <MenuItem key={year} value={year}>
+                      {year}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+              <TextField id="phone" label="Surgical procedure/location/findings" multiline rows={3} />
+            </Stack>
+          </Toogleable>
+          <Toogleable label="Radiation">
+            <Stack spacing={4}>
+              <TextField id="phone" label="Body area treated" />
+              <FormControl>
+                <FormLabel>End year</FormLabel>
+                <Select value={2021}>
+                  {YEARS.map((year) => (
+                    <MenuItem key={year} value={year}>
+                      {year}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Stack>
+          </Toogleable>
+          <Toogleable label="Systemic Therapy (chemotherapy, hormonal therapy, other)">
+            <Stack>
+              <FormControlLabel control={<Checkbox />} label="Carboplatin" />
+              <FormControlLabel control={<Checkbox />} label="Cisplatin " />
+              <FormControlLabel control={<Checkbox />} label="Etoposide" />
+              <FormControlLabel control={<Checkbox />} label="Paclitaxel" />
+              <FormControlLabel control={<Checkbox />} label="Vincristine" />
+            </Stack>
+          </Toogleable>
           <Divider />
           <Typography variant="h5">Follow-up care plan</Typography>
           <FormControl>
@@ -142,5 +131,34 @@ export const AddPatientForm: React.FC<AddPatientFormProps> = () => {
         </Stack>
       </form>
     </>
+  )
+}
+
+interface ToogleAbleProps {
+  label: string
+}
+
+const Toogleable: React.FC<ToogleAbleProps> = ({ children, label }) => {
+  const [checked, setChecked] = useState(false)
+
+  return (
+    <Stack spacing={1}>
+      <FormControlLabel
+        control={
+          <Checkbox
+            checked={checked}
+            onChange={(e) => {
+              setChecked(e.target.checked)
+            }}
+          />
+        }
+        label={label}
+      />
+      <Collapse in={checked}>
+        <Box pl={5} borderLeft="solid 1px #0000001f">
+          {children}
+        </Box>
+      </Collapse>
+    </Stack>
   )
 }
