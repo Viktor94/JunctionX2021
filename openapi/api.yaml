@@ -4,22 +4,7 @@ info:
   description: FollowUp
   version: 1.0.0
 paths:
-  /patient/register:
-    post:
-      tags:
-        - patient
-      description: 'This is a method for the caretakers to register a patient'
-      operationId: registerPatient
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatientRegistrationRequest'
-      responses:
-        201:
-          description: Created
-  /patient/{patientId}/submit-data:
+  /patient/{patientId}:
     post:
       tags:
         - patient
@@ -42,6 +27,44 @@ paths:
       responses:
         202:
           description: Accepted
+  /caretaker/{caretakerId}/patients:
+    get:
+      tags:
+        - caretaker
+      description: Get all patients of a given caretaker
+      operationId: getPatients
+      parameters:
+        - name: caretakerId
+          in: path
+          required: true
+          description: Id of the caretaker
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GeneralPatientInformation'
+  /caretaker/register-patient:
+    post:
+      tags:
+        - caretaker
+      description: 'This is a method for the caretakers to register a patient'
+      operationId: registerPatient
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatientRegistrationRequest'
+      responses:
+        201:
+          description: Created
 components:
   schemas:
     PatientRegistrationRequest:
@@ -79,6 +102,8 @@ components:
         contactPersonPhoneNumber:
           type: string
           description: Phone number of a person that can check up on the patient
+        primaryHealthcareProvider:
+          $ref: '#/components/schemas/HealthcareProviderInfo'
     TreatmentSummary:
       type: object
       properties:

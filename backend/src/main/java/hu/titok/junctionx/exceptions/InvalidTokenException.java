@@ -1,6 +1,4 @@
-package hu.titok.junctionx.exception;
-
-import org.springframework.http.HttpStatus;
+package hu.titok.junctionx.exceptions;
 
 
 public class InvalidTokenException extends AppException  {

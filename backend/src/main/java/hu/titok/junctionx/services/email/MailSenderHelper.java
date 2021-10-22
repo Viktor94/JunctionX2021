@@ -1,4 +1,4 @@
-package hu.titok.junctionx.service.email;
+package hu.titok.junctionx.services.email;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
