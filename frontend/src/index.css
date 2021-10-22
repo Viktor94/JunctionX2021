@@ -6,3 +6,7 @@ body {
 .MuiOutlinedInput-root fieldset {
   border-color: #353535;
 }
+
+.MuiCardContent-root:last-child {
+  padding-bottom: 16px !important;
+}

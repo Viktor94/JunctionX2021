@@ -1,4 +1,4 @@
-import { Card, CardContent, Stack, Typography } from '@mui/material'
+import { Box, Card, CardContent, Chip, Stack, styled, Typography } from '@mui/material'
 import React from 'react'
 import { Link } from 'react-router-dom'
 
@@ -36,7 +36,7 @@ export const PATIENTS: Patient[] = [
     email: 'example@example.com',
     name: 'Test Patient 2',
     priority: 'NORMAL',
-    questionnaryResults: [],
+    questionnaryResults: [{ id: '1', date: '2021. 10. 22.', answers: [] }],
     canceryType: 'Small cell lung cancer',
     yearOfDiagnosis: 2021,
   },
@@ -45,7 +45,7 @@ export const PATIENTS: Patient[] = [
     email: 'example@example.com',
     name: 'Test Patient 3',
     priority: 'NORMAL',
-    questionnaryResults: [],
+    questionnaryResults: [{ id: '1', date: '2021. 10. 22.', answers: [] }],
     canceryType: 'Small cell lung cancer',
     yearOfDiagnosis: 2021,
   },
@@ -56,33 +56,87 @@ export const PatientList: React.FC = () => {
   const restPatients = PATIENTS.filter((patient) => patient.priority !== 'HIGH')
 
   return (
-    <Stack spacing={4}>
-      <Stack spacing={1}>
+    <Stack spacing={6}>
+      <Stack spacing={3}>
         <Typography variant="h6">Patients waiting for review</Typography>
-        <Stack spacing={2}>
-          {importantPatients.map((patient) => (
-            <PatientCard key={patient.id} patient={patient} />
-          ))}
+        <Stack spacing={1}>
+          <PatientListHeader />
+          <Stack spacing={2}>
+            {importantPatients.map((patient) => (
+              <PatientCard key={patient.id} patient={patient} />
+            ))}
+          </Stack>
         </Stack>
       </Stack>
-      <Stack spacing={1}>
+      <Stack spacing={3}>
         <Typography variant="h6">Other patients</Typography>
-        <Stack spacing={2}>
-          {restPatients.map((patient) => (
-            <PatientCard key={patient.id} patient={patient} />
-          ))}
+        <Stack spacing={1}>
+          <PatientListHeader />
+          <Stack spacing={2}>
+            {restPatients.map((patient) => (
+              <PatientCard key={patient.id} patient={patient} />
+            ))}
+          </Stack>
         </Stack>
       </Stack>
     </Stack>
   )
 }
 
-const PatientCard: React.FC<{ patient: Patient }> = ({ patient }) => {
+const PatientListGrid: React.FC = ({ children }) => {
   return (
-    <Card component={Link} to={`/admin/${patient.id}`} style={{ textDecoration: 'none' }}>
-      <CardContent>
-        <Typography>{patient.name}</Typography>
-      </CardContent>
-    </Card>
+    <Box alignItems="center" display="grid" gridTemplateColumns="150px 100px auto" gap="32px">
+      {children}
+    </Box>
   )
 }
+
+const PatientListHeader: React.FC = () => {
+  return (
+    <Box pl="16px" pr="16px" style={{ opacity: 0.7 }}>
+      <PatientListGrid>
+        <Typography>Name</Typography>
+        <Typography>Status</Typography>
+        <Typography>Last follow-up result</Typography>
+      </PatientListGrid>
+    </Box>
+  )
+}
+
+const PatientCard: React.FC<{ patient: Patient }> = ({ patient }) => {
+  const priorityToColor: Record<Patient['priority'], string> = {
+    NORMAL: '#38913c',
+    HIGH: '#ff7043',
+  }
+
+  const lastQuestionnaryResult = patient.questionnaryResults[patient.questionnaryResults.length - 1]
+
+  return (
+    <PatientCardRoot component={Link} to={`/admin/${patient.id}`}>
+      <CardContent>
+        <PatientListGrid>
+          <Typography>{patient.name}</Typography>
+          <Chip
+            style={{
+              backgroundColor: priorityToColor[patient.priority],
+              pointerEvents: 'none',
+              color: '#fff',
+            }}
+            label={patient.priority}
+          />
+          <Typography>{lastQuestionnaryResult?.date}</Typography>
+        </PatientListGrid>
+      </CardContent>
+    </PatientCardRoot>
+  )
+}
+
+const PatientCardRoot = styled(Card)`
+  text-decoration: none;
+  transition: all ${(props) => props.theme.transitions.duration.shortest}ms;
+
+  &:hover,
+  &:focus {
+    background-color: #fafafa;
+  }
+` as typeof Card
