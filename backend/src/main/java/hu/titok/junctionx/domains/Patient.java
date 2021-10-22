@@ -13,12 +13,12 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
 public class Patient extends User {
 
   @ManyToMany private List<User> careTakerList;
   @OneToMany private List<CarePlanForm> carePlanFormList;
   @OneToMany private List<SymptomCounter> symptomCounters;
+
   private String primaryCareProvider;
   private String surgeon;
   private String radiationOncologist;
@@ -29,6 +29,13 @@ public class Patient extends User {
   private String relativePhoneNumber;
   private String relativeEmail;
 
-
   @OneToMany private List<Question> questions;
+
+  public Patient(String asd, String asd1, String asd2, String asd3) {
+    super(asd, asd1, asd2, asd3);
+  }
+
+  public Patient() {
+    super();
+  }
 }
