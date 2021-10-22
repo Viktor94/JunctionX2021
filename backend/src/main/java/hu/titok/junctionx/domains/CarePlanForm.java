@@ -26,6 +26,6 @@ public class CarePlanForm {
     private String longAnswer;
 
     @OneToMany
-    private List<Question> questions;
+    private List<Answer> answers;
 
 }
