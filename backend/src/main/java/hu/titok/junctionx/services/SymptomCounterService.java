@@ -4,5 +4,5 @@ import hu.titok.junctionx.domains.SymptomCounter;
 import org.springframework.stereotype.Service;
 
 @Service
-public interface SymptomCounterService extends GenericService<SymptomCounter> {
+public interface SymptomCounterService  {
 }

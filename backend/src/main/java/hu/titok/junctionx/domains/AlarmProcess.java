@@ -26,9 +26,8 @@ public class AlarmProcess {
 
     private int frequency;
 
-    @ElementCollection(targetClass= Instruction.class)
-    @JoinTable(name = "tblInstructions", joinColumns = @JoinColumn(name = "id"))
-    @Column(name = "instructions", nullable = false)
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "instruction", joinColumns = @JoinColumn(name = "id"))
     @Enumerated(EnumType.STRING)
-    private Collection<Instruction> instructions;
+    private List<Instruction> instructions;
 }
