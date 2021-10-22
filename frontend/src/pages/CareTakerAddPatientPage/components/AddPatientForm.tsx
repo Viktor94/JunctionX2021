@@ -154,7 +154,7 @@ const Toogleable: React.FC<ToogleAbleProps> = ({ children, label }) => {
         }
         label={label}
       />
-      <Collapse in={checked}>
+      <Collapse in={checked} unmountOnExit>
         <Box pl={5} borderLeft="solid 1px #0000001f">
           {children}
         </Box>
