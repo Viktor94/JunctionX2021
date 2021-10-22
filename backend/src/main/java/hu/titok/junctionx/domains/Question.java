@@ -20,6 +20,6 @@ public class Question {
     private Long id;
     private CancerType cancerType;
     private Symptom symptom;
-    private Boolean answer;
+    private String description;
 
 }

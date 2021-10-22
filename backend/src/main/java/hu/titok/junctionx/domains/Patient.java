@@ -1,5 +1,6 @@
 package hu.titok.junctionx.domains;
 
+import hu.titok.junctionx.domains.enums.Priority;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -22,4 +23,11 @@ public class Patient extends User {
   private String surgeon;
   private String radiationOncologist;
   private String medicalOncologist;
+  private Priority priority;
+  private String relativeName;
+  private String relativePhoneNumber;
+  private String relativeEmail;
+
+  @OneToMany
+  private List<Question> questions;
 }
