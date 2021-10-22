@@ -2,3 +2,7 @@ body {
   margin: 0;
   background-color: #eeeeee;
 }
+
+.MuiOutlinedInput-root fieldset {
+  border-color: black;
+}
