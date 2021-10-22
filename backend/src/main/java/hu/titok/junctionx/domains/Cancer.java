@@ -5,20 +5,20 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-public class Weight {
+public class Cancer {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  private Integer value;
-  private LocalDate localDate;
+  @ManyToMany private List<Patient> patientList;
 
-  @ManyToOne private Patient patientList;
+  private String location;
+
 }
