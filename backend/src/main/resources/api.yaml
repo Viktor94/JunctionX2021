@@ -1,0 +1,79 @@
+openapi: 3.0.3
+info:
+  title: FollowUp
+  description: FollowUp
+  version: 1.0.0
+paths:
+  /patient/register:
+    post:
+      tags:
+        - patient
+      description: 'This is a method for the caretakers to register a patient'
+      operationId: registerPatient
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatientRegistrationRequest'
+      responses:
+        201:
+          description: Created
+  /patient/{patientId}/submit-data:
+    post:
+      tags:
+        - patient
+      description: Patients use this method to post data about their physical and mental health
+      operationId: submitPatientData
+      parameters:
+        - name: patientId
+          in: path
+          description: The patient's id
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatientHealthData'
+      responses:
+        202:
+          description: Accepted
+components:
+  schemas:
+    PatientRegistrationRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the patient
+        birthDate:
+          type: string
+          format: date
+          description: Birth date of the patient
+        treatmentFinishDate:
+          type: string
+          format: date
+          description: The date when the patient was registered
+        phoneNumber:
+          type: string
+          description: The phone number of the patient
+        email:
+          type: string
+          description: The email address of the patient
+        homeAddress:
+          type: string
+          description: Home address of the patient
+        contactPersonPhoneNumber:
+          type: string
+          description: Phone number of a person that can check up on the patient
+    PatientHealthData:
+      type: object
+      properties:
+        healthDescription:
+          type: string
+          description: A free text description of the patient's health
+  
