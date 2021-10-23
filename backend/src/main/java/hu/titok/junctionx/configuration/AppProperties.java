@@ -8,13 +8,13 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Setter
 @ConfigurationProperties(prefix = "app")
 public class AppProperties {
-    private final Email email = new Email();
+  private final Email email = new Email();
 
-    @Getter
-    @Setter
-    public static final class Email {
-        private String senderEmail;
-        private String emailUsername;
-        private String emailPassword;
-    }
+  @Getter
+  @Setter
+  public static final class Email {
+    private String senderEmail;
+    private String emailUsername;
+    private String emailPassword;
+  }
 }

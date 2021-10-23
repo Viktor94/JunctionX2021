@@ -7,11 +7,11 @@ import java.util.Optional;
 
 public interface TokenService<T> {
 
-    T saveToken(T token);
+  T saveToken(T token);
 
-    void deleteToken(Long id);
+  void deleteToken(Long id);
 
-    T findByToken(String token) throws InvalidTokenException;
+  T findByToken(String token) throws InvalidTokenException;
 
-    Optional<T> findByUser(User user);
+  Optional<T> findByUser(User user);
 }

@@ -13,30 +13,31 @@ import java.util.UUID;
 @Getter
 @NoArgsConstructor
 public class RegistrationToken {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "token_id", length = 250)
-    private Long tokenid;
 
-    @Column(name = "password_reset_token", length = 250)
-    private String token;
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  @Column(name = "token_id", length = 250)
+  private Long tokenid;
 
-    private LocalDateTime createdAt;
+  @Column(name = "password_reset_token", length = 250)
+  private String token;
 
-    private LocalDateTime expirationTime;
+  private LocalDateTime createdAt;
 
-    @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER)
-    @JoinColumn(nullable = false, name = "user_id")
-    private User user;
+  private LocalDateTime expirationTime;
 
-    public RegistrationToken(User user) {
-        this.user = user;
-        this.createdAt = LocalDateTime.now();
-        this.token = UUID.randomUUID().toString();
-        this.expirationTime = createdAt.plusHours(24);
-    }
+  @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER)
+  @JoinColumn(nullable = false, name = "user_id")
+  private User user;
 
-    public boolean isTokenExpired() {
-        return expirationTime.isBefore(LocalDateTime.now());
-    }
+  public RegistrationToken(User user) {
+    this.user = user;
+    this.createdAt = LocalDateTime.now();
+    this.token = UUID.randomUUID().toString();
+    this.expirationTime = createdAt.plusHours(24);
+  }
+
+  public boolean isTokenExpired() {
+    return expirationTime.isBefore(LocalDateTime.now());
+  }
 }

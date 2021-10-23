@@ -16,13 +16,15 @@ import javax.persistence.*;
 @AllArgsConstructor
 public class Question {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @Enumerated(EnumType.STRING)
-    private CancerType cancerType;
-    @Enumerated(EnumType.STRING)
-    private SymptomType symptomType;
-    private String description;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
+  @Enumerated(EnumType.STRING)
+  private CancerType cancerType;
+
+  @Enumerated(EnumType.STRING)
+  private SymptomType symptomType;
+
+  private String description;
 }

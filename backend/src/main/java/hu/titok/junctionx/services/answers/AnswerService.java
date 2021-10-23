@@ -6,11 +6,11 @@ import java.util.List;
 
 public interface AnswerService {
 
-    void save(Answer answer);
+  void save(Answer answer);
 
-    void deleteById(Long id);
+  void deleteById(Long id);
 
-    Answer getById(Long id);
+  Answer getById(Long id);
 
-    List<Answer> getAll();
+  List<Answer> getAll();
 }

@@ -41,13 +41,13 @@ public class EmailSenderServiceImpl implements EmailSenderService {
   @Async
   @Override
   public void sendNotificationEmail(Locale locale, User user, List<String> messages) {
-    if(user instanceof Patient) {
+    if (user instanceof Patient) {
       String msg = mailContentBuilder.generateNotificationEmail(user, messages);
       mailSenderHelper.sendComplexMail(
-              new String[] {user.getEmail(), ((Patient) user).getRelativeEmail()},
-              appProperties.getEmail().getSenderEmail(),
-              getMessageByLanguage("mail.note.subject", locale),
-              msg);
+          new String[] {user.getEmail(), ((Patient) user).getRelativeEmail()},
+          appProperties.getEmail().getSenderEmail(),
+          getMessageByLanguage("mail.note.subject", locale),
+          msg);
     }
   }
 

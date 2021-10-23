@@ -1,7 +1,7 @@
 package hu.titok.junctionx.domains.enums;
 
 public enum Urgency {
-    HIGH,
-    MEDIUM,
-    LOW;
+  HIGH,
+  MEDIUM,
+  LOW
 }
