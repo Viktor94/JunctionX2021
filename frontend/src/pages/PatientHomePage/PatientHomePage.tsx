@@ -26,7 +26,7 @@ export const PatientHomePage: React.FC = () => {
     <PatientPageBase>
       <Stack spacing={4}>
         {data && (
-          <>
+          <Stack spacing={1}>
             <Typography variant="h6">Risk Factors and Prevention:</Typography>
             <Alert
               severity="info"
@@ -41,7 +41,7 @@ export const PatientHomePage: React.FC = () => {
                 </Typography>
               </Collapse>
             </Alert>
-          </>
+          </Stack>
         )}
         <Stack spacing={1}>
           <Typography variant="h6">Active follow-up</Typography>
