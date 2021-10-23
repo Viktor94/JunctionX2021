@@ -16,6 +16,7 @@ import { TextField } from 'components/form/TextField'
 import produce from 'immer'
 import { api } from 'lib/api/api'
 import { Question, StatusReport } from 'lib/api/generated/generatedApi'
+import { PATIENT_USER_ID } from 'lib/constants'
 import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router'
 import illustrationImg from '../media/illustration.svg'
@@ -74,7 +75,7 @@ export const PatientForm: React.FC<PatientFormProps> = ({ questions }) => {
   }
 
   const submit = async () => {
-    const response = await api.carePlanForm.submitForm(1, value)
+    const response = await api.carePlanForm.submitForm(PATIENT_USER_ID, value)
     setResponse(response.data)
   }
 
