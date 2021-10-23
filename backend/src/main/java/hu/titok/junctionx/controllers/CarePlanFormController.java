@@ -4,9 +4,7 @@ import hu.titok.junctionx.domains.CarePlanForm;
 import hu.titok.junctionx.services.Careplan.CarePlanFormService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/care-plan-form")
@@ -19,9 +17,9 @@ public class CarePlanFormController {
     this.carePlanFormService = carePlanFormService;
   }
 
-  @PostMapping("/")
-  public ResponseEntity<?> saveCarePlanForm(CarePlanForm carePlanForm) {
-    carePlanFormService.save(carePlanForm);
+  @PostMapping("/{patientId}")
+  public ResponseEntity<?> submitForm(@PathVariable long patientId, @RequestBody CarePlanForm carePlanForm) {
+    carePlanFormService.submitForm(patientId, carePlanForm);
 
     return ResponseEntity.ok(carePlanForm);
   }

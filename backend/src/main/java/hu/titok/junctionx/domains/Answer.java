@@ -1,5 +1,6 @@
 package hu.titok.junctionx.domains;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,11 +16,14 @@ public class Answer {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @ManyToOne private Patient patient; // todo set
+  @JsonBackReference
+  @ManyToOne private Patient patient;
 
   @ManyToOne private Question question;
 
-  private Boolean response;
+  private Boolean yesNoResponse;
+  private Integer numericResponse;
+  private String textResponse;
 
-  private LocalDate occurrenceDate; // todo set
+  private LocalDate answerDate;
 }

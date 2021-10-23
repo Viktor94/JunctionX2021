@@ -1,5 +1,6 @@
 package hu.titok.junctionx.domains;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import hu.titok.junctionx.domains.enums.Priority;
 import hu.titok.junctionx.domains.enums.Role;
 import lombok.Getter;
@@ -14,6 +15,7 @@ import java.util.List;
 @DiscriminatorValue("Patient")
 public class Patient extends User {
 
+  @JsonIgnore
   @ManyToMany private List<User> careTakerList;
   @OneToMany private List<CarePlanForm> carePlanFormList;
 

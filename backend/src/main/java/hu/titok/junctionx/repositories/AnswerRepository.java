@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AnswerRepository extends JpaRepository<Answer, Long> {
-  int countAnswersByResponseAndPatientIdAndQuestionSymptomType(
-      boolean response, long patientId, SymptomType symptomType);
+  int countAnswersByYesNoResponseAndPatientIdAndQuestionSymptomType(
+      boolean yesNoResponse, long patientId, SymptomType symptomType);
 }

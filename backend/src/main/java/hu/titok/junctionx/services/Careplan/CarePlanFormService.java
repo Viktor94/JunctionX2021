@@ -8,7 +8,7 @@ import java.util.List;
 @Service
 public interface CarePlanFormService {
 
-  void save(CarePlanForm carePlanForm);
+  void submitForm(long patientId, CarePlanForm carePlanForm);
 
   void deleteById(Long id);
 

@@ -1,31 +1,39 @@
 package hu.titok.junctionx.services.Careplan;
 
 import hu.titok.junctionx.domains.CarePlanForm;
+import hu.titok.junctionx.domains.Patient;
 import hu.titok.junctionx.repositories.AnswerRepository;
 import hu.titok.junctionx.repositories.CarePlanFormRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import hu.titok.junctionx.repositories.UserRepository;
+import hu.titok.junctionx.services.users.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class CarePlanFormServiceImpl implements CarePlanFormService {
 
   private final CarePlanFormRepository carePlanFormRepository;
   private final AnswerRepository answerRepository;
-
-  @Autowired
-  public CarePlanFormServiceImpl(
-      CarePlanFormRepository carePlanFormRepository, AnswerRepository answerRepository) {
-    this.carePlanFormRepository = carePlanFormRepository;
-    this.answerRepository = answerRepository;
-  }
+  private final UserService userService;
 
   @Override
-  public void save(CarePlanForm carePlanForm) {
-    answerRepository.saveAll(carePlanForm.getAnswers());
-    setBloodPressureStatus(carePlanForm.getId());
+  public void submitForm(long patientId, CarePlanForm carePlanForm) {
+    var patient = (Patient) userService.getById(patientId);
+    carePlanForm.setDateOfSubmit(OffsetDateTime.now());
+    carePlanForm.setPatient(patient);
+    var answers = carePlanForm.getAnswers();
+    for (var answer : answers) {
+      answer.setPatient(patient);
+      answer.setAnswerDate(LocalDate.now());
+    }
+    answerRepository.saveAll(answers);
     carePlanFormRepository.save(carePlanForm);
+    setBloodPressureStatus(carePlanForm.getId());
   }
 
   @Override
