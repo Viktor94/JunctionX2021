@@ -7,8 +7,9 @@ export const PatientPageBase: React.FC = ({ children }) => {
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="static">
           <Toolbar>
-            <Box display="flex" justifyContent="flex-end" width="100%">
-              <Typography color="inherit">Test Patient</Typography>
+            <Box display="flex" justifyContent="space-between" width="100%" alignItems="center" m="0px 60px 0px 40px">
+              <img src="assets/logo.png" alt="logo" width="150" height="75"/>
+              <Typography color="inherit">Esteban Kovacs</Typography>
             </Box>
           </Toolbar>
         </AppBar>

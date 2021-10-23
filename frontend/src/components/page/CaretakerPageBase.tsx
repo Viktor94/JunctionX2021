@@ -1,4 +1,4 @@
-import { Box, Card, Stack, Typography } from '@mui/material'
+import { Box, Card, Stack, Typography, AppBar, Toolbar, } from '@mui/material'
 import React from 'react'
 
 interface CareTakerPageBaseProps {
@@ -10,6 +10,16 @@ export const CareTakerPageBase: React.FC<CareTakerPageBaseProps> = ({ children, 
   return (
     <div>
       {/* <CareTakerAside /> */}
+      <Box sx={{ flexGrow: 1 }}>
+        <AppBar position="static">
+          <Toolbar>
+            <Box display="flex" justifyContent="space-between" width="100%" alignItems="center" m="0px 60px 0px 40px">
+              <img src="assets/logo.png" alt="logo" width="150" height="75"/>
+              <Typography color="inherit">Dr. Suresh H Advani</Typography>
+            </Box>
+          </Toolbar>
+        </AppBar>
+      </Box>
       <Box ml={`${0}px`}>
         <Card style={{ borderRadius: 0, height: 80 }}>
           <Box
