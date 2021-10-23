@@ -1,6 +1,6 @@
 package hu.titok.junctionx.domains;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,7 +16,7 @@ public class Answer {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @JsonBackReference
+  @JsonIgnore
   @ManyToOne private Patient patient;
 
   @ManyToOne private Question question;
