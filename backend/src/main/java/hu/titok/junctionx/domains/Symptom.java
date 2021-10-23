@@ -1,28 +1,24 @@
 package hu.titok.junctionx.domains;
 
-import hu.titok.junctionx.domains.enums.CancerType;
 import hu.titok.junctionx.domains.enums.SymptomType;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.OffsetDateTime;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
-public class Question {
-
+public class Symptom {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Enumerated(EnumType.STRING)
-    private CancerType cancerType;
-    @Enumerated(EnumType.STRING)
+    @ManyToOne
+    private Patient patient;
     private SymptomType symptomType;
-    private String description;
-
+    private OffsetDateTime occurrenceDate;
 }

@@ -2,7 +2,7 @@ package hu.titok.junctionx.domains;
 
 import hu.titok.junctionx.domains.enums.CancerType;
 import hu.titok.junctionx.domains.enums.Instruction;
-import hu.titok.junctionx.domains.enums.Symptom;
+import hu.titok.junctionx.domains.enums.SymptomType;
 import hu.titok.junctionx.domains.enums.Urgency;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,7 +20,7 @@ public class AlarmProcess {
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    private Symptom symptom;
+    private SymptomType symptomType;
 
     @Enumerated(EnumType.STRING)
     private CancerType cancerType;

@@ -32,7 +32,7 @@ public class AlarmProcessServiceImpl implements AlarmProcessService {
         List<StatusReport> statusReports = new ArrayList<>();
         boolean isEmailRequired = false;
         for (Frequency frequency : frequencies) {
-            AlarmProcess process = alarmProcessRepository.findByCancerTypeAndSymptomAndFrequency(frequency.getCancerType(), frequency.getSymptom(), frequency.getFrequency());
+            AlarmProcess process = alarmProcessRepository.findByCancerTypeAndSymptomTypeAndFrequency(frequency.getCancerType(), frequency.getSymptom(), frequency.getFrequency());
             switch (process.getInstructions()) {
                 case SEND_EMAIL:
                     //send email

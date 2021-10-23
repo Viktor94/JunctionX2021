@@ -1,6 +1,6 @@
 package hu.titok.junctionx.domains.enums;
 
-public enum Symptom {
+public enum SymptomType {
     HEADACHE,
     SKIN_CHANGE,
     FATIGUE,

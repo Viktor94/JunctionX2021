@@ -1,7 +1,7 @@
 package hu.titok.junctionx.domains;
 
 import hu.titok.junctionx.domains.enums.CancerType;
-import hu.titok.junctionx.domains.enums.Symptom;
+import hu.titok.junctionx.domains.enums.SymptomType;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,7 +14,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Frequency {
-    private Symptom symptom;
+    private SymptomType symptom;
     private CancerType cancerType;
     private int frequency;
 }
