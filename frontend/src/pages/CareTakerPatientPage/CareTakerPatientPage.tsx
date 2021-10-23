@@ -1,4 +1,4 @@
-import { Card, CardContent, Link, List, ListItemButton, Stack, Typography } from '@mui/material'
+import { Card, CardContent, Chip, Link, List, ListItemButton, Stack, Typography } from '@mui/material'
 import { Breadcrumbs, BreadCrumbActiveItem, BreadCrumbDivider, BreadCrumbItem } from 'components/page/Breadcrumbs'
 import { CareTakerPageBase } from 'components/page/CaretakerPageBase'
 import { Stat } from 'components/Stat'
@@ -9,6 +9,8 @@ import { useQuery } from 'react-query'
 import { api } from 'lib/api/api'
 import { CircularProgress } from '@mui/material'
 import { fixString } from 'pages/CareTakerAddPatientPage/components/AddPatientForm'
+import { priorityToColor } from 'pages/CareTakerHomePage/components/PatientList'
+import { Box } from '@mui/system'
 
 export const CareTakerPatientPage: React.FC = () => {
   const { id } = useParams<{ id: string }>()
@@ -19,11 +21,6 @@ export const CareTakerPatientPage: React.FC = () => {
     return <CircularProgress />
   }
   const patient = data.data.find((patient) => patient.id === Number.parseInt(id))!
-
-  const questionnaryResults = [
-    { id: '1', date: '2021. 10. 22.', answers: [] },
-    { id: '2', date: '2022. 12. 22.', answers: [] },
-  ]
 
   return (
     <CareTakerPageBase
@@ -41,6 +38,19 @@ export const CareTakerPatientPage: React.FC = () => {
             <Stack spacing={6}>
               <Stack spacing={1}>
                 <Typography variant="h6">General</Typography>
+                <Stat
+                  label="Status"
+                  value={
+                    <Chip
+                      style={{
+                        backgroundColor: priorityToColor[patient.priority!],
+                        pointerEvents: 'none',
+                        color: '#fff',
+                      }}
+                      label={patient.priority}
+                    />
+                  }
+                />
                 <Stack direction="row" spacing={6}>
                   <Stat label="Date of Birth  " value={patient.dateOfBirth!} />
                   <Stat label="Email address" value={patient.email!} />
