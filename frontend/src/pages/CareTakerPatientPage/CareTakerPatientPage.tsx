@@ -23,14 +23,14 @@ export const CareTakerPatientPage: React.FC = () => {
   }
   const patient = data.data.find((patient) => patient.id === Number.parseInt(id))!
 
-  const carePlamFormList = patient.carePlanFormList;
-  console.log(carePlamFormList);
+  const carePlamFormList = patient.carePlanFormList
+  console.log(carePlamFormList)
 
-  const userHealthData = carePlamFormList?.map(data => ({
+  const userHealthData = carePlamFormList?.map((data) => ({
     date: new Date(data.dateOfSubmit!).toLocaleDateString(),
-    diastolic: data.diastolic,
-    systolic: data.systolic,
-    weight: data.weight
+    Diastolic: data.diastolic,
+    Systolic: data.systolic,
+    Weight: data.weight,
   }))
 
   return (
@@ -77,15 +77,20 @@ export const CareTakerPatientPage: React.FC = () => {
               </Stack>
               <Stack spacing={1}>
                 <Typography variant="h6">Health data</Typography>
-                <LineChart width={70 * 14} height={250} data={userHealthData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+                <LineChart
+                  width={70 * 14}
+                  height={250}
+                  data={userHealthData}
+                  margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+                >
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="date" />
                   <YAxis tickCount={45} />
                   <Tooltip />
                   <Legend />
-                  <Line type="monotone" dataKey="diastolic" stroke="#2832b8" />
-                  <Line type="monotone" dataKey="systolic" stroke="#c21a1a" />
-                  <Line type="monotone" dataKey="weight" stroke="#babd19" />
+                  <Line type="monotone" dataKey="Diastolic" stroke="#2832b8" />
+                  <Line type="monotone" dataKey="Systolic" stroke="#c21a1a" />
+                  <Line type="monotone" dataKey="Weight" stroke="#babd19" />
                 </LineChart>
               </Stack>
               <Stack spacing={1}>
@@ -107,9 +112,7 @@ export const CareTakerPatientPage: React.FC = () => {
             </Stack>
           </CardContent>
         </Card>
-        <Card>
-
-        </Card>
+        <Card></Card>
       </Stack>
     </CareTakerPageBase>
   )
