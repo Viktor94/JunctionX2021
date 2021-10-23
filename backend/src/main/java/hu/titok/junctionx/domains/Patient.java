@@ -30,6 +30,7 @@ public class Patient extends User {
   private String relativeName;
   private String relativePhoneNumber;
   private String relativeEmail;
+  @Enumerated(EnumType.STRING)
   private CancerType cancerType;
 
   @OneToMany private List<Question> questions;
