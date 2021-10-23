@@ -25,6 +25,6 @@ public class RiskFactorAndPreventionController {
   @GetMapping("/risk-factors")
   public ResponseEntity<List<RiskFactorAndPrevention>> riskFactors() {
 
-    return ResponseEntity.ok(riskFactorAndPreventionService.tricksAndTrips(1L));
+    return ResponseEntity.ok(riskFactorAndPreventionService.tricksAndTrips(3L));
   }
 }
