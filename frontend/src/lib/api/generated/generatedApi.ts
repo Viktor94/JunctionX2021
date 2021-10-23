@@ -57,6 +57,19 @@ export interface Patient {
   relativeName?: string
   relativePhoneNumber?: string
   relativeEmail?: string
+  cancerType?:
+    | 'BLADDER'
+    | 'BREAST'
+    | 'COLORECTAL'
+    | 'KIDNEY'
+    | 'LUNG'
+    | 'LYMPHOMA'
+    | 'MELANOMA'
+    | 'ORAL_AND_OROPHARYNGEAL'
+    | 'PANCREATIC'
+    | 'PROSTATE'
+    | 'THYROID'
+    | 'UTERINE'
   questions?: Question[]
 }
 
@@ -100,6 +113,11 @@ export interface Question {
     | 'FERTILITY'
   questionType?: 'YES_NO' | 'NUMERIC' | 'TEXT'
   description?: string
+}
+
+export interface StatusReport {
+  urgency?: 'HIGH' | 'MEDIUM' | 'LOW'
+  message?: string
 }
 
 export interface RegistrationPayload {
@@ -286,7 +304,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request POST:/care-plan-form/{patientId}
      */
     submitForm: (patientId: number, data: CarePlanForm, params: RequestParams = {}) =>
-      this.request<object, any>({
+      this.request<StatusReport[], any>({
         path: `/care-plan-form/${patientId}`,
         method: 'POST',
         body: data,
@@ -323,6 +341,35 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     getAllQuestions: (params: RequestParams = {}) =>
       this.request<Question[], any>({
         path: `/questions/`,
+        method: 'GET',
+        ...params,
+      }),
+  }
+  prevention = {
+    /**
+     * No description
+     *
+     * @tags risk-factor-and-prevention-controller
+     * @name Tips
+     * @request GET:/prevention/tips
+     */
+    tips: (params: RequestParams = {}) =>
+      this.request<string[], any>({
+        path: `/prevention/tips`,
+        method: 'GET',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags risk-factor-and-prevention-controller
+     * @name RiskFactors
+     * @request GET:/prevention/risk-factors
+     */
+    riskFactors: (params: RequestParams = {}) =>
+      this.request<string[], any>({
+        path: `/prevention/risk-factors`,
         method: 'GET',
         ...params,
       }),
