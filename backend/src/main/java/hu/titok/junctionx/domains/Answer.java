@@ -14,12 +14,15 @@ public class Answer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    
+    @ManyToOne
+    private Patient patient; // todo set
 
     @ManyToOne
     private Question question;
 
     private Boolean response;
     
-    private LocalDate occurrenceDate;
+    private LocalDate occurrenceDate; // todo set
 }
 

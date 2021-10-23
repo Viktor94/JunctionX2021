@@ -16,7 +16,6 @@ public class Patient extends User {
 
   @ManyToMany private List<User> careTakerList;
   @OneToMany private List<CarePlanForm> carePlanFormList;
-  @OneToMany private List<Symptom> symptomCounters;
 
   private String primaryCareProvider;
   private String surgeon;
