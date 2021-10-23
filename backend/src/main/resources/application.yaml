@@ -14,6 +14,10 @@ spring:
       ddl-auto: create
       naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
     defer-datasource-initialization: true
+  sql:
+    init:
+      data-locations:
+        - classpath:testdata/init.sql
 app:
   auth:
     tokenSecret: "mogyika"
@@ -21,3 +25,4 @@ app:
     emailUsername: ${EMAIL_USERNAME}
     emailPassword: ${EMAIL_PASSWORD}
     senderEmail: "info@ateam.com"
+

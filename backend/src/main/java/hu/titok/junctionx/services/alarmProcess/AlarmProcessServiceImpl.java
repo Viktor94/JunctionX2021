@@ -39,8 +39,8 @@ public class AlarmProcessServiceImpl implements AlarmProcessService {
                     isEmailRequired = true;
 
                 case GIVE_ADVICE:
-                    if (StringUtils.isNotBlank(process.getInstruction())) {
-                        statusReports.add(new StatusReport(process.getUrgency(), process.getInstruction()));
+                    if (StringUtils.isNotBlank(process.getAdvice())) {
+                        statusReports.add(new StatusReport(process.getUrgency(), process.getAdvice()));
                     }
                     // things to do
                 case NOTIFY_CARE_TEAM:

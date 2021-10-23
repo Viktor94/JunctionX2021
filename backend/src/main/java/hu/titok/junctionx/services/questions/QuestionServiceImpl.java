@@ -43,13 +43,13 @@ public class QuestionServiceImpl implements QuestionService {
   }
 
   @EventListener(ApplicationReadyEvent.class)
-  public void initSave() {
+  public void initSave() {/*
     List<Question> questions = new ArrayList<>();
     questions.add(new Question(1L, CancerType.LUNG, Symptom.COUGH, "Joint pains"));
     questions.add(new Question(2L, CancerType.LUNG, Symptom.COUGH, "Leg or muscle cramps"));
     questions.add(new Question(3L, CancerType.LUNG, Symptom.COUGH, "Unexplained weight loss"));
     questions.add(new Question(4L, CancerType.LUNG, Symptom.COUGH, "Lack of restful sleep"));
     questions.add(new Question(5L, CancerType.LUNG, Symptom.COUGH, "Hot flashes"));
-    questionRepository.saveAll(questions);
+    questionRepository.saveAll(questions);*/
   }
 }
