@@ -2,6 +2,7 @@ package hu.titok.junctionx.services.Careplan;
 
 import hu.titok.junctionx.domains.CarePlanForm;
 import hu.titok.junctionx.domains.Patient;
+import hu.titok.junctionx.domains.enums.Urgency;
 import hu.titok.junctionx.pojos.StatusReport;
 import hu.titok.junctionx.repositories.AnswerRepository;
 import hu.titok.junctionx.repositories.CarePlanFormRepository;
@@ -35,10 +36,10 @@ public class CarePlanFormServiceImpl implements CarePlanFormService {
     }
     answerRepository.saveAll(answers);
     answerRepository.flush();
+    var bloodPressureStatus = setBloodPressureStatusAndGetStatusReport(carePlanForm);
     carePlanFormRepository.save(carePlanForm);
-    setBloodPressureStatus(carePlanForm.getId());
     
-    return alarmProcessService.manageSymptom(patient, answers);
+    return alarmProcessService.manageSymptoms(patient, answers, bloodPressureStatus);
   }
 
   @Override
@@ -56,9 +57,8 @@ public class CarePlanFormServiceImpl implements CarePlanFormService {
     return carePlanFormRepository.findAll();
   }
 
-  public void setBloodPressureStatus(Long carePlanFormId) {
-    CarePlanForm carePlanForm = getById(carePlanFormId);
-
+  public StatusReport setBloodPressureStatusAndGetStatusReport(CarePlanForm carePlanForm) {
+    StatusReport statusReport = null;
     int systolic = carePlanForm.getSystolic();
     int diastolic = carePlanForm.getDiastolic();
 
@@ -66,13 +66,18 @@ public class CarePlanFormServiceImpl implements CarePlanFormService {
       carePlanForm.setBloodPressureStatus("NORMAL");
     } else if (between(systolic, 120, 129) && diastolic < 80) {
       carePlanForm.setBloodPressureStatus("ELEVATED");
+      statusReport = new StatusReport(Urgency.LOW, "Your blood pressure is slightly elevated, monitor it to be safe.");
     } else if (between(systolic, 130, 139) || between(diastolic, 80, 89)) {
       carePlanForm.setBloodPressureStatus(("HIGH BLOOD PRESSURE STAGE 1"));
+      statusReport = new StatusReport(Urgency.LOW, "Your blood pressure is elevated. Contact your care team or a healthcare professional!");
     } else if (between(systolic, 140, 90) || between(diastolic, 90, 119)) {
       carePlanForm.setBloodPressureStatus("HIGH BLOOD PRESSURE STAGE 2");
+      statusReport = new StatusReport(Urgency.HIGH, "Your blood pressure is high. Seek medical help!");
     } else if (systolic > 180 || diastolic > 120) {
       carePlanForm.setBloodPressureStatus("HYPERTENSIVE CRISIS");
+      statusReport = new StatusReport(Urgency.HIGH, "Your blood pressure is extremely high, seek medical help immediately. Your care team has also been notified!");
     }
+    return statusReport;
   }
 
   private boolean between(int i, int min, int max) {

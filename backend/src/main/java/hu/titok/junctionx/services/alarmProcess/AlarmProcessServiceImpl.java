@@ -30,7 +30,7 @@ public class AlarmProcessServiceImpl implements AlarmProcessService {
     private final UserService userService;
     
     @Override
-    public List<StatusReport> manageSymptom(User user, List<Answer> answers) {
+    public List<StatusReport> manageSymptoms(User user, List<Answer> answers, StatusReport bloodPressureStatus) {
         List<StatusReport> statusReports = new ArrayList<>();
         boolean isEmailRequired = false;
         boolean shouldRaisePatientPriority = false;
@@ -70,6 +70,13 @@ public class AlarmProcessServiceImpl implements AlarmProcessService {
                         break;
                 }
             }
+        }
+        if (bloodPressureStatus != null) {
+            if (bloodPressureStatus.getUrgency().equals(Urgency.HIGH)) {
+                isEmailRequired = true;
+                shouldRaisePatientPriority = true;
+            }
+            statusReports.add(bloodPressureStatus);
         }
         if (isEmailRequired) {
             emailSenderService.sendNotificationEmail(
