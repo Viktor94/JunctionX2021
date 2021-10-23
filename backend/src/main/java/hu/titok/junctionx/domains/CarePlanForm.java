@@ -1,5 +1,6 @@
 package hu.titok.junctionx.domains;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,6 +16,7 @@ public class CarePlanForm {
   @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
+  @JsonIgnore
   @ManyToOne private Patient patient;
 
   @OneToMany private List<Answer> answers;
