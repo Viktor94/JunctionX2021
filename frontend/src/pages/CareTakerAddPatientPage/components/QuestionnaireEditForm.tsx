@@ -11,11 +11,12 @@ import {
   Stack,
   Typography,
 } from '@mui/material'
-import React from 'react'
+import React, { useState } from 'react'
 import { useQuery } from 'react-query'
 import { CircularProgress } from '@mui/material'
 import { api } from 'lib/api/api'
 import { Question } from 'lib/api/generated/generatedApi'
+import { da } from 'date-fns/locale'
 
 interface QuestionnaireEditFormProps {
   isOpen: boolean
@@ -23,15 +24,32 @@ interface QuestionnaireEditFormProps {
   onChange: (value: Question[]) => void
 }
 
-export const QuestionnaireEditForm: React.FC<QuestionnaireEditFormProps> = ({ isOpen, onClose, onChange }) => {
+export const QuestionnaireEditForm: React.FC<QuestionnaireEditFormProps> = (props) => {
+
   const { data, status } = useQuery('questions', () => api.questions.getAllQuestions())
 
-  if (status === 'loading') {
+  if (!data) {
     return <CircularProgress />
   }
 
-  const onCheckHandler = (question: Question) => {
-    console.log("adding in question", question);
+  return <QuestionnaireEditFormInner data={data?.data} {...props}/>
+}
+
+const QuestionnaireEditFormInner: React.FC<QuestionnaireEditFormProps & {data:Question[]}> = ({data, isOpen, onClose, onChange }) => {
+  
+  const [questions, setQuestions] = useState(data);
+
+  const onCheckHandler = (isChecked: boolean, question: Question) => {
+    if(isChecked) {
+      setQuestions([...questions, question])
+    } else {
+      setQuestions(questions.filter(q => q.id !== question.id))
+    }
+  }
+
+  const onSaveHandler = () => {
+    onChange(questions)
+    onClose()
   }
 
   return (
@@ -40,11 +58,11 @@ export const QuestionnaireEditForm: React.FC<QuestionnaireEditFormProps> = ({ is
       <DialogContent style={{ backgroundColor: '#e8edf0' }}>
         <Box pt={2} pb={2}>
           <Stack spacing={2}>
-            {data?.data.map((question) => (
+            {data.map((question) => (
               <Card key={question.id}>
                 <CardContent>
                   <Box display="flex" alignItems="center">
-                    <Checkbox defaultChecked />
+                    <Checkbox defaultChecked onChange={(event) => onCheckHandler(event.target.checked, question)}/>
                     <Typography>{question.description}</Typography>
                   </Box>
                 </CardContent>
@@ -54,7 +72,7 @@ export const QuestionnaireEditForm: React.FC<QuestionnaireEditFormProps> = ({ is
         </Box>
       </DialogContent>
       <DialogActions>
-        <Button variant="contained">Save</Button>
+        <Button variant="contained" onClick={() => onSaveHandler()}>Save</Button>
       </DialogActions>
     </Dialog>
   )

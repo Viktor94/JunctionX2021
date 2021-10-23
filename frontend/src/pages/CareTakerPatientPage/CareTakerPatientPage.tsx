@@ -11,6 +11,7 @@ import { CircularProgress } from '@mui/material'
 import { fixString } from 'pages/CareTakerAddPatientPage/components/AddPatientForm'
 import { priorityToColor } from 'pages/CareTakerHomePage/components/PatientList'
 import { Box } from '@mui/system'
+import { LineChart, CartesianGrid, YAxis, XAxis, Tooltip, Legend, Line } from 'recharts'
 
 export const CareTakerPatientPage: React.FC = () => {
   const { id } = useParams<{ id: string }>()
@@ -21,6 +22,16 @@ export const CareTakerPatientPage: React.FC = () => {
     return <CircularProgress />
   }
   const patient = data.data.find((patient) => patient.id === Number.parseInt(id))!
+
+  const carePlamFormList = patient.carePlanFormList
+  console.log(carePlamFormList)
+
+  const userHealthData = carePlamFormList?.map((data) => ({
+    date: new Date(data.dateOfSubmit!).toLocaleDateString(),
+    Diastolic: data.diastolic,
+    Systolic: data.systolic,
+    Weight: data.weight,
+  }))
 
   return (
     <CareTakerPageBase
@@ -65,34 +76,45 @@ export const CareTakerPatientPage: React.FC = () => {
                 </Stack>
               </Stack>
               <Stack spacing={1}>
+                <Typography variant="h6">Health data</Typography>
+                <LineChart
+                  width={70 * 14}
+                  height={250}
+                  data={userHealthData}
+                  margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="date" />
+                  <YAxis tickCount={45} />
+                  <Tooltip />
+                  <Legend />
+                  <Line type="monotone" dataKey="Diastolic" stroke="#2832b8" />
+                  <Line type="monotone" dataKey="Systolic" stroke="#c21a1a" />
+                  <Line type="monotone" dataKey="Weight" stroke="#babd19" />
+                </LineChart>
+              </Stack>
+              <Stack spacing={1}>
                 <Typography variant="h6">Follow-up questionnaires</Typography>
                 <List>
-                  {patient.carePlanFormList?.map((questionary) => (
-                    <ListItemButton
-                      key={questionary.id}
-                      component={RouterLink}
-                      to={`/admin/${patient.id}/${questionary.id}`}
-                    >
-                      <Typography>
-                        <Link>{new Date(questionary.dateOfSubmit!).toLocaleDateString()}</Link>
-                      </Typography>
-                    </ListItemButton>
-                  ))}
+                  {patient.carePlanFormList
+                    ?.sort((a, b) => (a.dateOfSubmit! > b.dateOfSubmit! ? -1 : 1))
+                    .map((questionary) => (
+                      <ListItemButton
+                        key={questionary.id}
+                        component={RouterLink}
+                        to={`/admin/${patient.id}/${questionary.id}`}
+                      >
+                        <Typography>
+                          <Link>{new Date(questionary.dateOfSubmit!).toLocaleDateString()}</Link>
+                        </Typography>
+                      </ListItemButton>
+                    ))}
                 </List>
               </Stack>
             </Stack>
           </CardContent>
         </Card>
-        {/* <Card>
-          <CardContent>
-            <LineChart width={600} height={300} data={[]}>
-              <Line type="monotone" dataKey="uv" stroke="#8884d8" />
-              <CartesianGrid stroke="#ccc" />
-              <XAxis dataKey="name" />
-              <YAxis />
-            </LineChart>
-          </CardContent>
-        </Card> */}
+        <Card></Card>
       </Stack>
     </CareTakerPageBase>
   )

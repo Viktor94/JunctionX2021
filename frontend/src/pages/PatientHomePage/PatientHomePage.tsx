@@ -7,7 +7,6 @@ import { api } from '../../lib/api/api'
 import { LineChart, CartesianGrid, YAxis, XAxis, Tooltip, Legend, Line } from 'recharts'
 import { Stat } from 'components/Stat'
 
-
 export const PatientHomePage: React.FC = () => {
   const { data } = useQuery('risk-factors', async () => {
     const response = await api.prevention.riskFactors()
@@ -26,21 +25,20 @@ export const PatientHomePage: React.FC = () => {
   if (!test) {
     return <CircularProgress />
   }
-  const carePlamFormList = test.data.carePlanFormList;
-  console.log(carePlamFormList);
+  const carePlamFormList = test.data.carePlanFormList
+  console.log(carePlamFormList)
 
-  const userValues = carePlamFormList?.map(data => ({
+  const userValues = carePlamFormList?.map((data) => ({
     date: new Date(data.dateOfSubmit!).toLocaleDateString(),
-    diastolic: data.diastolic,
-    systolic: data.systolic,
-    weight: data.weight
+    Diastolic: data.diastolic,
+    Systolic: data.systolic,
+    Weight: data.weight,
   }))
 
-  console.log(userValues);
+  console.log(userValues)
   if (!data && data !== null) {
     return <CircularProgress />
   }
-
 
   return (
     <PatientPageBase>
@@ -76,15 +74,15 @@ export const PatientHomePage: React.FC = () => {
             <YAxis tickCount={45} />
             <Tooltip />
             <Legend />
-            <Line type="monotone" dataKey="diastolic" stroke="#2832b8" />
-            <Line type="monotone" dataKey="systolic" stroke="#c21a1a" />
-            <Line type="monotone" dataKey="weight" stroke="#babd19" />
+            <Line type="monotone" dataKey="Diastolic" stroke="#2832b8" />
+            <Line type="monotone" dataKey="Systolic" stroke="#c21a1a" />
+            <Line type="monotone" dataKey="Weight" stroke="#babd19" />
           </LineChart>
         </Stack>
         <Stack spacing={1}>
           <Typography variant="h6">Care Team Contact Information</Typography>
           <Stack direction="row">
-            <Stack flex={1} >
+            <Stack flex={1}>
               <Stat label="Team members " value="Dr. Ashok Vaid" />
               <Stat label="" value="Dr. Suresh H Advani" />
               <Stat label="" value="Dr. PP Bapsy" />
@@ -97,8 +95,6 @@ export const PatientHomePage: React.FC = () => {
           </Stack>
         </Stack>
       </Stack>
-
-
     </PatientPageBase>
   )
 }
