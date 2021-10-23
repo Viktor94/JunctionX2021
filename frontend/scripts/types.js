@@ -9,7 +9,7 @@ generateApi({
 })
     .then(({ files }) => {
         const { content } = files[0]
-        const outPath = path.join(__dirname, '..', 'lib/api/generated/generatedApi.ts')
+        const outPath = path.join(__dirname, '..', 'src/lib/api/generated/generatedApi.ts')
         fs.writeFileSync(outPath, content)
     })
     .catch(e => console.error(e))

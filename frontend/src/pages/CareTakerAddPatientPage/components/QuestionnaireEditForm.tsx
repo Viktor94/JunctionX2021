@@ -11,10 +11,10 @@ import {
   Stack,
   Typography,
 } from '@mui/material'
-import axios from 'axios';
 import React from 'react';
 import { useQuery } from 'react-query';
 import { CircularProgress } from '@mui/material';
+import { api } from 'lib/api/api';
 
 interface QuestionnaireEditFormProps {
   isOpen: boolean
@@ -35,7 +35,7 @@ export const QUESTIONS = [
 
 export const QuestionnaireEditForm: React.FC<QuestionnaireEditFormProps> = ({ isOpen, onClose }) => {
   
-  const {data, status} = useQuery("questions", () => axios.get<any[]>("http://localhost:8080/questions/"));
+  const {data, status} = useQuery("questions", () => api.questions.getAllQuestions());
 
   if(status === 'loading') {
     return <CircularProgress />
