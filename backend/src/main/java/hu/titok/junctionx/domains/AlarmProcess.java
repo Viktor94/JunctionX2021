@@ -19,8 +19,10 @@ public class AlarmProcess {
     @Column(name = "id", length = 250)
     private Long id;
 
+    @Enumerated(EnumType.STRING)
     private Symptom symptom;
 
+    @Enumerated(EnumType.STRING)
     private CancerType cancerType;
 
     private int frequency;
@@ -31,5 +33,5 @@ public class AlarmProcess {
     @Enumerated(EnumType.STRING)
     private Urgency urgency;
 
-    private String instruction;
+    private String advice;
 }
