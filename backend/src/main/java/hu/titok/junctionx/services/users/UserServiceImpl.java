@@ -1,16 +1,15 @@
 package hu.titok.junctionx.services.users;
 
-import hu.titok.junctionx.domains.CareTaker;
 import hu.titok.junctionx.domains.Patient;
 import hu.titok.junctionx.domains.User;
+import hu.titok.junctionx.domains.enums.Role;
 import hu.titok.junctionx.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -45,5 +44,13 @@ public class UserServiceImpl implements UserService {
   @Override
   public List<User> getAll() {
     return userRepository.findAll();
+  }
+
+  @Override
+  public List<Patient> getAllPatient() {
+    return userRepository.findAll().stream()
+        .filter(user -> user.getRole().equals(Role.PATIENT))
+        .map(user -> (Patient) user)
+        .collect(Collectors.toList());
   }
 }
