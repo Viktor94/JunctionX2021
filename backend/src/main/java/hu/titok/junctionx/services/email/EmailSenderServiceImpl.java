@@ -5,6 +5,7 @@ import hu.titok.junctionx.domains.Patient;
 import hu.titok.junctionx.domains.RegistrationToken;
 import hu.titok.junctionx.domains.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 @Service
+@Profile("!dev")
 public class EmailSenderServiceImpl implements EmailSenderService {
 
   private final MailSenderHelper mailSenderHelper;
