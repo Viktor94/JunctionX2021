@@ -11,18 +11,15 @@ import java.time.LocalDate;
 @Setter
 public class Answer {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    
-    @ManyToOne
-    private Patient patient; // todo set
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    @ManyToOne
-    private Question question;
+  @ManyToOne private Patient patient; // todo set
 
-    private Boolean response;
-    
-    private LocalDate occurrenceDate; // todo set
+  @ManyToOne private Question question;
+
+  private Boolean response;
+
+  private LocalDate occurrenceDate; // todo set
 }
-

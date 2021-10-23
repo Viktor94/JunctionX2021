@@ -13,14 +13,12 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling
 public class BackendApplication implements CommandLineRunner {
 
-	private UserService userService;
-	
-	public static void main(String[] args) {
-		SpringApplication.run(BackendApplication.class, args);
-	}
+  private UserService userService;
 
-	@Override
-	public void run(String... args) throws Exception {
+  public static void main(String[] args) {
+    SpringApplication.run(BackendApplication.class, args);
+  }
 
-	}
+  @Override
+  public void run(String... args) throws Exception {}
 }

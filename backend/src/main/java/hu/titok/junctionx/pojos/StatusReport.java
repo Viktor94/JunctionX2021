@@ -11,6 +11,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class StatusReport {
-    private Urgency urgency;
-    private String message;
+  private Urgency urgency;
+  private String message;
 }

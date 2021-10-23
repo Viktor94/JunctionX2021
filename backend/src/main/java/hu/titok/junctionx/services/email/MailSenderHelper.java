@@ -16,44 +16,44 @@ import javax.mail.MessagingException;
 @Profile("!dev")
 public class MailSenderHelper {
 
-    private final Logger logger = LoggerFactory.getLogger(MailSenderHelper.class);
+  private final Logger logger = LoggerFactory.getLogger(MailSenderHelper.class);
 
-    private final JavaMailSender emailSender;
+  private final JavaMailSender emailSender;
 
-    @Autowired
-    public MailSenderHelper(JavaMailSender emailSender) {
-        this.emailSender = emailSender;
+  @Autowired
+  public MailSenderHelper(JavaMailSender emailSender) {
+    this.emailSender = emailSender;
+  }
+
+  public void sendSimpleMail(String to, String from, String subject, String text) {
+    var message = new SimpleMailMessage();
+    message.setTo(to);
+    message.setSubject(subject);
+    message.setText(text);
+    message.setFrom(from);
+    emailSender.send(message);
+
+    logger.info("Mail sent to: {}, with subject: {}", to, subject);
+  }
+
+  @Async
+  public void sendComplexMail(String[] to, String from, String subject, String text) {
+
+    var message = emailSender.createMimeMessage();
+    MimeMessageHelper helper = null;
+    try {
+      helper = new MimeMessageHelper(message, true);
+
+      helper.setFrom(from);
+      helper.setTo(to);
+      helper.setSubject(subject);
+      helper.setText(text, true);
+
+      emailSender.send(message);
+      logger.info("Mail sent to: {}, with subject: {}", to, subject);
+
+    } catch (MessagingException e) {
+      logger.error(e.getMessage());
     }
-
-    public void sendSimpleMail(String to, String from, String subject, String text) {
-        var message = new SimpleMailMessage();
-        message.setTo(to);
-        message.setSubject(subject);
-        message.setText(text);
-        message.setFrom(from);
-        emailSender.send(message);
-
-        logger.info("Mail sent to: {}, with subject: {}", to, subject);
-    }
-
-    @Async
-    public void sendComplexMail(String[] to, String from, String subject, String text) {
-
-        var message = emailSender.createMimeMessage();
-        MimeMessageHelper helper = null;
-        try {
-            helper = new MimeMessageHelper(message, true);
-
-            helper.setFrom(from);
-            helper.setTo(to);
-            helper.setSubject(subject);
-            helper.setText(text,true);
-
-            emailSender.send(message);
-            logger.info("Mail sent to: {}, with subject: {}", to, subject);
-
-        } catch (MessagingException e) {
-            logger.error(e.getMessage());
-        }
-    }
+  }
 }

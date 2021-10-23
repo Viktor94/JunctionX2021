@@ -8,5 +8,5 @@ import java.util.List;
 import java.util.Locale;
 
 public interface AlarmProcessService {
-    List<StatusReport> manageSymptom(Locale locale, User user, List<Frequency> frequencies);
+  List<StatusReport> manageSymptom(Locale locale, User user, List<Frequency> frequencies);
 }

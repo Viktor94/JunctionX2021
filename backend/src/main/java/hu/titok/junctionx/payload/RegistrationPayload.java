@@ -8,5 +8,5 @@ import lombok.*;
 @AllArgsConstructor
 @ToString
 public class RegistrationPayload {
-    private String password;
+  private String password;
 }

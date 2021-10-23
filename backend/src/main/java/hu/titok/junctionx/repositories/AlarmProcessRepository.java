@@ -6,5 +6,6 @@ import hu.titok.junctionx.domains.enums.SymptomType;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface AlarmProcessRepository extends JpaRepository<AlarmProcess, Long> {
-    AlarmProcess findByCancerTypeAndSymptomTypeAndFrequency(CancerType cancerType, SymptomType symptom, int frequency);
+  AlarmProcess findByCancerTypeAndSymptomTypeAndFrequency(
+      CancerType cancerType, SymptomType symptom, int frequency);
 }

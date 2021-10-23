@@ -11,13 +11,9 @@ import java.util.Locale;
 @Service
 @Profile("dev")
 public class FakeEmailSenderService implements EmailSenderService {
-    @Override
-    public void sendRegistrationEmail(Locale locale, RegistrationToken registrationToken) {
+  @Override
+  public void sendRegistrationEmail(Locale locale, RegistrationToken registrationToken) {}
 
-    }
-
-    @Override
-    public void sendNotificationEmail(Locale locale, User user, List<String> messages) {
-
-    }
+  @Override
+  public void sendNotificationEmail(Locale locale, User user, List<String> messages) {}
 }

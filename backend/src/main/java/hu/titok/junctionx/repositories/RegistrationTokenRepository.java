@@ -11,9 +11,9 @@ import java.util.Optional;
 @Repository
 public interface RegistrationTokenRepository extends CrudRepository<RegistrationToken, Long> {
 
-    Optional<RegistrationToken> findByToken(String token);
+  Optional<RegistrationToken> findByToken(String token);
 
-    Optional<RegistrationToken> findByUser(User user);
+  Optional<RegistrationToken> findByUser(User user);
 
-    void deleteAllByExpirationTimeBefore(LocalDateTime time);
+  void deleteAllByExpirationTimeBefore(LocalDateTime time);
 }

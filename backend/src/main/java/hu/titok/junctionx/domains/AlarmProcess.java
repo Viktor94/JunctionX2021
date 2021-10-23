@@ -14,24 +14,24 @@ import javax.persistence.*;
 @Setter
 public class AlarmProcess {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", length = 250)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  @Column(name = "id", length = 250)
+  private Long id;
 
-    @Enumerated(EnumType.STRING)
-    private SymptomType symptomType;
+  @Enumerated(EnumType.STRING)
+  private SymptomType symptomType;
 
-    @Enumerated(EnumType.STRING)
-    private CancerType cancerType;
+  @Enumerated(EnumType.STRING)
+  private CancerType cancerType;
 
-    private int frequency;
+  private int frequency;
 
-    @Enumerated(EnumType.STRING)
-    private Instruction instructions;
+  @Enumerated(EnumType.STRING)
+  private Instruction instructions;
 
-    @Enumerated(EnumType.STRING)
-    private Urgency urgency;
+  @Enumerated(EnumType.STRING)
+  private Urgency urgency;
 
-    private String advice;
+  private String advice;
 }
