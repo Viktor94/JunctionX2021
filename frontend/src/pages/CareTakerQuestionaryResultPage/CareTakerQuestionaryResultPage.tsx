@@ -40,7 +40,7 @@ export const CareTakerQuestionaryResultPage: React.FC = () => {
         <Card>
           <CardContent>
             <Stack spacing={6}>
-              {!!questionary.weight && <Stat label="Weight" value={questionary.weight} />}
+              {!!questionary.weight && <Stat label="Weight" value={`${questionary.weight} Kg`} />}
               <Stack direction="row" spacing={4}>
                 {!!questionary.systolic && <Stat label="Systolic" value={questionary.systolic} />}
                 {!!questionary.diastolic && <Stat label="Diastolic" value={questionary.diastolic} />}
