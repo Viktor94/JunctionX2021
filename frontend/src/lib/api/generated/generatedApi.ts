@@ -58,6 +58,7 @@ export interface Patient {
   relativePhoneNumber?: string
   relativeEmail?: string
   cancerType?:
+    | 'COMMON'
     | 'BLADDER'
     | 'BREAST'
     | 'COLORECTAL'
@@ -77,6 +78,7 @@ export interface Question {
   /** @format int64 */
   id?: number
   cancerType?:
+    | 'COMMON'
     | 'BLADDER'
     | 'BREAST'
     | 'COLORECTAL'
@@ -90,6 +92,10 @@ export interface Question {
     | 'THYROID'
     | 'UTERINE'
   symptomType?:
+    | 'HAPPINESS'
+    | 'CALMNESS'
+    | 'EXHAUSTED'
+    | 'DEPRESSED'
     | 'HEADACHE'
     | 'SKIN_CHANGE'
     | 'FATIGUE'
@@ -111,6 +117,7 @@ export interface Question {
     | 'BLADDER_IRRITATION'
     | 'SEXUAL_PROBLEMS'
     | 'FERTILITY'
+    | 'WEIGHT_LOSS'
   questionType?: 'YES_NO' | 'NUMERIC' | 'TEXT'
   description?: string
 }
@@ -370,6 +377,82 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     riskFactors: (params: RequestParams = {}) =>
       this.request<string[], any>({
         path: `/prevention/risk-factors`,
+        method: 'GET',
+        ...params,
+      }),
+  }
+  data = {
+    /**
+     * No description
+     *
+     * @tags data-controller
+     * @name GetAllSymptomType
+     * @request GET:/data/symptom-types
+     */
+    getAllSymptomType: (params: RequestParams = {}) =>
+      this.request<
+        (
+          | 'HAPPINESS'
+          | 'CALMNESS'
+          | 'EXHAUSTED'
+          | 'DEPRESSED'
+          | 'HEADACHE'
+          | 'SKIN_CHANGE'
+          | 'FATIGUE'
+          | 'DRY_MOUTH'
+          | 'DIFFICULT_SWALLOWING'
+          | 'JAW_STIFFNESS'
+          | 'HAIR_LOSS'
+          | 'TOOTH_DECAY'
+          | 'BREATH_SHORTNESS'
+          | 'SHOULDER_STIFFNESS'
+          | 'COUGH'
+          | 'FEVER'
+          | 'LOSS_OF_APETITE'
+          | 'VOMITING'
+          | 'BOWEL_CRAMPING'
+          | 'DIARRHEA'
+          | 'RECTAL_BLEEDING'
+          | 'INCONTINENCE'
+          | 'BLADDER_IRRITATION'
+          | 'SEXUAL_PROBLEMS'
+          | 'FERTILITY'
+          | 'WEIGHT_LOSS'
+        )[],
+        any
+      >({
+        path: `/data/symptom-types`,
+        method: 'GET',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags data-controller
+     * @name GetAllCancerType
+     * @request GET:/data/cancer-types
+     */
+    getAllCancerType: (params: RequestParams = {}) =>
+      this.request<
+        (
+          | 'COMMON'
+          | 'BLADDER'
+          | 'BREAST'
+          | 'COLORECTAL'
+          | 'KIDNEY'
+          | 'LUNG'
+          | 'LYMPHOMA'
+          | 'MELANOMA'
+          | 'ORAL_AND_OROPHARYNGEAL'
+          | 'PANCREATIC'
+          | 'PROSTATE'
+          | 'THYROID'
+          | 'UTERINE'
+        )[],
+        any
+      >({
+        path: `/data/cancer-types`,
         method: 'GET',
         ...params,
       }),

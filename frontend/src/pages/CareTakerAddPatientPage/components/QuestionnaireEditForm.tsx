@@ -15,29 +15,23 @@ import React from 'react'
 import { useQuery } from 'react-query'
 import { CircularProgress } from '@mui/material'
 import { api } from 'lib/api/api'
+import { Question } from 'lib/api/generated/generatedApi'
 
 interface QuestionnaireEditFormProps {
   isOpen: boolean
   onClose: VoidFunction
+  onChange: (value: Question[]) => void
 }
 
-export const QUESTIONS = [
-  { id: 1, label: 'Shortness of breath or difficulty breathing' },
-  { id: 2, label: 'Ankle swelling' },
-  { id: 3, label: 'Problems with memory, attention, or concentration' },
-  { id: 4, label: 'Frequent headaches or migraines' },
-  { id: 5, label: 'Numbness or tingling' },
-  { id: 6, label: 'Dizziness, vertigo or problems with balance or equilibrium' },
-  { id: 7, label: 'Tremors (shaking of fingers or hands), or weakness in arms or legs' },
-  { id: 8, label: 'Frequent cough' },
-  { id: 9, label: 'Frequent or severe heartburn, indigestion, or stomach pain' },
-]
-
-export const QuestionnaireEditForm: React.FC<QuestionnaireEditFormProps> = ({ isOpen, onClose }) => {
+export const QuestionnaireEditForm: React.FC<QuestionnaireEditFormProps> = ({ isOpen, onClose, onChange }) => {
   const { data, status } = useQuery('questions', () => api.questions.getAllQuestions())
 
   if (status === 'loading') {
     return <CircularProgress />
+  }
+
+  const onCheckHandler = (question: Question) => {
+    console.log("adding in question", question);
   }
 
   return (
