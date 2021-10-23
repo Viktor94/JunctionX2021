@@ -2,6 +2,7 @@ package hu.titok.junctionx.services.users;
 
 import hu.titok.junctionx.domains.Patient;
 import hu.titok.junctionx.domains.User;
+import hu.titok.junctionx.domains.enums.Priority;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,4 +19,6 @@ public interface UserService {
   List<User> getAll();
 
   List<Patient> getAllPatient();
+  
+  void setPatientPriorityByPatientId(long patientId, Priority priority);
 }

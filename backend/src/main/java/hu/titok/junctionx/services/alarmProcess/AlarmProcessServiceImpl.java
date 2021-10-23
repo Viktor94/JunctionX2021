@@ -30,7 +30,7 @@ public class AlarmProcessServiceImpl implements AlarmProcessService {
     private final UserService userService;
     
     @Override
-    public List<StatusReport> manageSymptoms(User user, List<Answer> answers, StatusReport bloodPressureStatus) {
+    public List<StatusReport> manageSymptoms(Patient patient, List<Answer> answers, StatusReport bloodPressureStatus) {
         List<StatusReport> statusReports = new ArrayList<>();
         boolean isEmailRequired = false;
         boolean shouldRaisePatientPriority = false;
@@ -42,7 +42,7 @@ public class AlarmProcessServiceImpl implements AlarmProcessService {
             if (QuestionType.TEXT.equals(questionType)) continue;
             if (QuestionType.YES_NO.equals(questionType)) {
                 symptomFrequency = answerService.countSignificantYesNoAnswers(
-                        true, user.getId(), question.getCancerType(), question.getSymptomType());
+                        true, patient.getId(), question.getCancerType(), question.getSymptomType());
             } else if (QuestionType.NUMERIC.equals(questionType)) {
                 symptomFrequency = answer.getNumericResponse();
             }
@@ -81,18 +81,30 @@ public class AlarmProcessServiceImpl implements AlarmProcessService {
         if (isEmailRequired) {
             emailSenderService.sendNotificationEmail(
                     Locale.ENGLISH,
-                    user,
+                    patient,
                     statusReports.stream().map(StatusReport::getMessage).collect(Collectors.toList()));
             log.info("Email sent!");
             if (statusReports.isEmpty())
                 statusReports.add(new StatusReport(Urgency.LOW, "An email was sent to your care team and close relatives!"));
         }
+        var targetPriority = patient.getPriority();
         if (shouldRaisePatientPriority) {
-            var patient = (Patient) user;
-            patient.setPriority(Priority.HIGH);
-            userService.save(patient);
+            if (Priority.LOW.equals(targetPriority)) {
+                targetPriority = Priority.MEDIUM;
+            } else {
+                targetPriority = Priority.HIGH;
+            }
             if (statusReports.isEmpty())
                 statusReports.add(new StatusReport(Urgency.MEDIUM, "Your care team has been notified!"));
+        } else {
+            if (Priority.HIGH.equals(targetPriority)) {
+                targetPriority = Priority.MEDIUM;
+            } else {
+                targetPriority = Priority.LOW;
+            }
+        }
+        if (!targetPriority.equals(patient.getPriority())) {
+            userService.setPatientPriorityByPatientId(patient.getId(), targetPriority);
         }
         if (statusReports.isEmpty())
             statusReports.add(new StatusReport(Urgency.LOW, "No immediate action is necessary!"));
