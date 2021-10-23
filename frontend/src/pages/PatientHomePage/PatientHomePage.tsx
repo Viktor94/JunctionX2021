@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import { FollowUpItem } from './components/FollowUpItem'
 import { useQuery } from 'react-query'
 import { api } from '../../lib/api/api'
+import { Stat } from 'components/Stat'
 
 export const PatientHomePage: React.FC = () => {
   const { data } = useQuery('risk-factors', async () => {
@@ -49,6 +50,21 @@ export const PatientHomePage: React.FC = () => {
         </Stack>
         <Stack spacing={1}></Stack>
       </Stack>
+      <Stack spacing={1}>
+          <Typography variant="h6">Care Team Contact Information</Typography>
+          <Stack direction="row">
+          <Stack flex={1} >
+            <Stat label="Team members " value="Dr. Ashok Vaid"/>
+            <Stat label="" value="Dr. Suresh H Advani"/>
+            <Stat label="" value="Dr. PP Bapsy"/> 
+            <Stat label="" value="Dr. Vinod Raina"/>
+          </Stack>
+          <Stack flex={1} spacing={3}>
+            <Stat label="Department phone number  " value="+36 30 6669999" />
+            <Stat label="Email address  " value="oncology_4@superclinic.net" />
+          </Stack>
+          </Stack>
+        </Stack>
     </PatientPageBase>
   )
 }

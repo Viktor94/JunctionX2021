@@ -3,7 +3,7 @@ import React from 'react'
 
 interface StatProps {
   label: string
-  value: string | number
+  value: any
 }
 
 export const Stat: React.FC<StatProps> = ({ label, value }) => {

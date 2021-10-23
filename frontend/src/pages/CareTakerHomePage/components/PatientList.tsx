@@ -84,14 +84,13 @@ const PatientListHeader: React.FC = () => {
   )
 }
 
+export const priorityToColor: Record<string, string> = {
+  LOW: '#38913c',
+  HIGH: '#ff7043',
+  MEDIUM: '#ebba34',
+}
 const PatientCard: React.FC<{ patient: Patient }> = ({ patient }) => {
-  const priorityToColor: Record<string, string> = {
-    LOW: '#38913c',
-    HIGH: '#ff7043',
-    MEDIUM: '#ebba34',
-  }
-
-  const lastQuestionnaryResult = { id: '1', date: '2021. 10. 22.', answers: [] }
+  const lastQuestionnaryResult = patient.carePlanFormList?.[0]
 
   return (
     <LinkCard to={`/admin/${patient.id}`}>
@@ -106,7 +105,9 @@ const PatientCard: React.FC<{ patient: Patient }> = ({ patient }) => {
             }}
             label={patient.priority}
           />
-          <Typography>{lastQuestionnaryResult?.date}</Typography>
+          {lastQuestionnaryResult && lastQuestionnaryResult.dateOfSubmit && (
+            <Typography>{new Date(lastQuestionnaryResult.dateOfSubmit).toLocaleDateString()}</Typography>
+          )}
         </PatientListGrid>
       </CardContent>
     </LinkCard>
