@@ -1,6 +1,5 @@
 import { Box, Card, Stack, Typography } from '@mui/material'
 import React from 'react'
-import { CareTakerAside, CARE_TAKER_ASIDE_WIDTH } from './CareTakerAside'
 
 interface CareTakerPageBaseProps {
   title: React.ReactNode
@@ -10,15 +9,24 @@ interface CareTakerPageBaseProps {
 export const CareTakerPageBase: React.FC<CareTakerPageBaseProps> = ({ children, title, action }) => {
   return (
     <div>
-      <CareTakerAside />
-      <Box ml={`${CARE_TAKER_ASIDE_WIDTH}px`}>
+      {/* <CareTakerAside /> */}
+      <Box ml={`${0}px`}>
         <Card style={{ borderRadius: 0, height: 80 }}>
-          <Box p={2} height="100%" display="flex" alignItems="center" justifyContent="space-between">
+          <Box
+            p={2}
+            height="100%"
+            display="flex"
+            alignItems="center"
+            justifyContent="space-between"
+            maxWidth="70rem"
+            ml="auto"
+            mr="auto"
+          >
             <Typography variant="h6">{title}</Typography>
             <Box>{action}</Box>
           </Box>
         </Card>
-        <Stack spacing={4} p={3}>
+        <Stack spacing={4} p={3} maxWidth="70rem" ml="auto" mr="auto">
           <main>{children}</main>
         </Stack>
       </Box>
