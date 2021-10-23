@@ -6,6 +6,7 @@ import { useQuery } from 'react-query'
 import { api } from '../../lib/api/api'
 import { LineChart, CartesianGrid, YAxis, XAxis, Tooltip, Legend, Line } from 'recharts'
 import { Stat } from 'components/Stat'
+import { PATIENT_USER_ID } from 'lib/constants'
 
 export const PatientHomePage: React.FC = () => {
   const { data } = useQuery('risk-factors', async () => {
@@ -20,7 +21,7 @@ export const PatientHomePage: React.FC = () => {
 
   const [checked, setChecked] = useState(true)
 
-  const { data: test } = useQuery('bloodpressure', () => api.users.getPatient(1))
+  const { data: test } = useQuery('bloodpressure', () => api.users.getPatient(PATIENT_USER_ID))
 
   if (!test) {
     return <CircularProgress />
