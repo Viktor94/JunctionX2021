@@ -18,7 +18,7 @@ public class Patient extends User {
 
   @JsonIgnore
   @ManyToMany private List<User> careTakerList;
-  @OneToMany private List<CarePlanForm> carePlanFormList;
+  @OneToMany(mappedBy = "patient") private List<CarePlanForm> carePlanFormList;
 
   private String primaryCareProvider;
   private String surgeon;
