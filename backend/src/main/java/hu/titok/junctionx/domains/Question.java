@@ -32,4 +32,7 @@ public class Question {
   private QuestionType questionType;
 
   private String description;
+  
+  @Convert(converter = StringListConverter.class)
+  private List<String> numericLabels;
 }
