@@ -11,7 +11,10 @@ import {
   Stack,
   Typography,
 } from '@mui/material'
-import React from 'react'
+import axios from 'axios';
+import React from 'react';
+import { useQuery } from 'react-query';
+import { CircularProgress } from '@mui/material';
 
 interface QuestionnaireEditFormProps {
   isOpen: boolean
@@ -31,18 +34,25 @@ export const QUESTIONS = [
 ]
 
 export const QuestionnaireEditForm: React.FC<QuestionnaireEditFormProps> = ({ isOpen, onClose }) => {
+  
+  const {data, status} = useQuery("questions", () => axios.get<any[]>("http://localhost:8080/questions/"));
+
+  if(status === 'loading') {
+    return <CircularProgress />
+  }
+  
   return (
     <Dialog open={isOpen} onClose={onClose} maxWidth="lg" fullWidth>
       <DialogTitle>Customize questionnaire</DialogTitle>
       <DialogContent style={{ backgroundColor: '#eeeeee' }}>
         <Box pt={2} pb={2}>
           <Stack spacing={2}>
-            {QUESTIONS.map((question) => (
-              <Card key={question.label}>
+            {data?.data.map((question) => (
+              <Card key={question.id}>
                 <CardContent>
                   <Box display="flex" alignItems="center">
                     <Checkbox defaultChecked />
-                    <Typography>{question.label}</Typography>
+                    <Typography>{question.description}</Typography>
                   </Box>
                 </CardContent>
               </Card>
