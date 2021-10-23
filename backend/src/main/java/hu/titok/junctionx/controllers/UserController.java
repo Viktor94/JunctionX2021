@@ -5,6 +5,7 @@ import hu.titok.junctionx.services.users.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -19,8 +20,8 @@ public class UserController {
 
   @PostMapping
   public ResponseEntity<?> addUser(@RequestBody Patient patient) {
+    patient.setQuestions(null);
     userService.save(patient);
-
     return ResponseEntity.ok().build();
   }
 
