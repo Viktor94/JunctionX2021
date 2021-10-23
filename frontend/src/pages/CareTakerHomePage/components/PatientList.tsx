@@ -26,8 +26,8 @@ export const PatientList: React.FC = () => {
   const lowPrioPatients = data?.data.filter((patient) => patient.priority === 'LOW')
 
   return (
-    <Stack spacing={6}>
-      <Stack spacing={3}>
+    <Stack spacing={4}>
+      <Stack spacing={2}>
         <Typography style={{ fontWeight: 600 }}>Patients waiting for review</Typography>
         <Stack spacing={1}>
           <PatientListHeader />
@@ -38,7 +38,7 @@ export const PatientList: React.FC = () => {
           </Stack>
         </Stack>
       </Stack>
-      <Stack spacing={3}>
+      <Stack spacing={2}>
         <Typography style={{ fontWeight: 600 }}>Medium priority patients</Typography>
         <Stack spacing={1}>
           <PatientListHeader />
@@ -49,7 +49,7 @@ export const PatientList: React.FC = () => {
           </Stack>
         </Stack>
       </Stack>
-      <Stack spacing={3}>
+      <Stack spacing={2}>
         <Typography style={{ fontWeight: 600 }}>Low priority patients</Typography>
         <Stack spacing={1}>
           <PatientListHeader />
