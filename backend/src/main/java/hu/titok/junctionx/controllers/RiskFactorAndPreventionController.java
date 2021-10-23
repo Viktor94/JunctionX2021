@@ -1,5 +1,6 @@
 package hu.titok.junctionx.controllers;
 
+import hu.titok.junctionx.domains.RiskFactorAndPrevention;
 import hu.titok.junctionx.services.patientTipsService.RiskFactorAndPreventionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,12 +23,8 @@ public class RiskFactorAndPreventionController {
   }
 
   @GetMapping("/risk-factors")
-  public ResponseEntity<List<String>> riskFactors() {
-    return ResponseEntity.ok(riskFactorAndPreventionService.riskFactors(1L));
-  }
+  public ResponseEntity<List<RiskFactorAndPrevention>> riskFactors() {
 
-  @GetMapping("/tips")
-  public ResponseEntity<List<String>> tips() {
-    return ResponseEntity.ok(riskFactorAndPreventionService.preventionTips(1L));
+    return ResponseEntity.ok(riskFactorAndPreventionService.tricksAndTrips(1L));
   }
 }

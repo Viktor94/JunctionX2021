@@ -131,6 +131,11 @@ export interface RegistrationPayload {
   password?: string
 }
 
+export interface RiskFactorAndPrevention {
+  riskFactor?: string
+  prevention?: string
+}
+
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, ResponseType } from 'axios'
 
 export type QueryParamsType = Record<string | number, any>
@@ -357,25 +362,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @tags risk-factor-and-prevention-controller
-     * @name Tips
-     * @request GET:/prevention/tips
-     */
-    tips: (params: RequestParams = {}) =>
-      this.request<string[], any>({
-        path: `/prevention/tips`,
-        method: 'GET',
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags risk-factor-and-prevention-controller
      * @name RiskFactors
      * @request GET:/prevention/risk-factors
      */
     riskFactors: (params: RequestParams = {}) =>
-      this.request<string[], any>({
+      this.request<RiskFactorAndPrevention[], any>({
         path: `/prevention/risk-factors`,
         method: 'GET',
         ...params,
