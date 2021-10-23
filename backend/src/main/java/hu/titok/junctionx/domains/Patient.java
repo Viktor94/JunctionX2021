@@ -42,4 +42,10 @@ public class Patient extends User {
   public Patient() {
     super(Role.PATIENT);
   }
+
+  public CarePlanForm addCarePlanForm(CarePlanForm carePlanForm) {
+    this.carePlanFormList.add(carePlanForm);
+    carePlanForm.setPatient(this);
+    return carePlanForm;
+  }
 }

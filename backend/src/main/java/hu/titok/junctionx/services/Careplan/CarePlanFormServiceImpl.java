@@ -37,7 +37,8 @@ public class CarePlanFormServiceImpl implements CarePlanFormService {
     answerRepository.saveAll(answers);
     answerRepository.flush();
     var bloodPressureStatus = setBloodPressureStatusAndGetStatusReport(carePlanForm);
-    carePlanFormRepository.save(carePlanForm);
+    patient.addCarePlanForm(carePlanFormRepository.save(carePlanForm));
+    userService.save(patient);
     
     return alarmProcessService.manageSymptoms(patient, answers, bloodPressureStatus);
   }
