@@ -19,13 +19,14 @@ export const NumericQuestion: React.FC<BooleanQuestionProps> = ({ question, addA
       <Stack direction="row">
         {new Array(5).fill(true).map((_, i) => (
           <QuestionButton
+            style={{ width: 150 }}
             selected={value === i}
             onClick={() => {
               addAnswer(question, { numericResponse: i })
               setValue(i)
             }}
           >
-            {i + 1}
+            {(question as any).numericLabels[i] ?? i + 1}
           </QuestionButton>
         ))}
       </Stack>

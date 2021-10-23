@@ -26,9 +26,9 @@ export const PatientList: React.FC = () => {
   const lowPrioPatients = data?.data.filter((patient) => patient.priority === 'LOW')
 
   return (
-    <Stack spacing={6}>
-      <Stack spacing={3}>
-        <Typography variant="h6">Patients waiting for review</Typography>
+    <Stack spacing={4}>
+      <Stack spacing={2}>
+        <Typography style={{ fontWeight: 600 }}>Patients waiting for review</Typography>
         <Stack spacing={1}>
           <PatientListHeader />
           <Stack spacing={2}>
@@ -38,8 +38,8 @@ export const PatientList: React.FC = () => {
           </Stack>
         </Stack>
       </Stack>
-      <Stack spacing={3}>
-        <Typography variant="h6">Medium priority patients</Typography>
+      <Stack spacing={2}>
+        <Typography style={{ fontWeight: 600 }}>Medium priority patients</Typography>
         <Stack spacing={1}>
           <PatientListHeader />
           <Stack spacing={2}>
@@ -49,8 +49,8 @@ export const PatientList: React.FC = () => {
           </Stack>
         </Stack>
       </Stack>
-      <Stack spacing={3}>
-        <Typography variant="h6">Low priority patients</Typography>
+      <Stack spacing={2}>
+        <Typography style={{ fontWeight: 600 }}>Low priority patients</Typography>
         <Stack spacing={1}>
           <PatientListHeader />
           <Stack spacing={2}>
@@ -84,14 +84,13 @@ const PatientListHeader: React.FC = () => {
   )
 }
 
+export const priorityToColor: Record<string, string> = {
+  LOW: '#38913c',
+  HIGH: '#ff7043',
+  MEDIUM: '#ebba34',
+}
 const PatientCard: React.FC<{ patient: Patient }> = ({ patient }) => {
-  const priorityToColor: Record<string, string> = {
-    LOW: '#38913c',
-    HIGH: '#ff7043',
-    MEDIUM: '#ebba34',
-  }
-
-  const lastQuestionnaryResult = { id: '1', date: '2021. 10. 22.', answers: [] }
+  const lastQuestionnaryResult = patient.carePlanFormList?.[0]
 
   return (
     <LinkCard to={`/admin/${patient.id}`}>
@@ -106,7 +105,9 @@ const PatientCard: React.FC<{ patient: Patient }> = ({ patient }) => {
             }}
             label={patient.priority}
           />
-          <Typography>{lastQuestionnaryResult?.date}</Typography>
+          {lastQuestionnaryResult && lastQuestionnaryResult.dateOfSubmit && (
+            <Typography>{new Date(lastQuestionnaryResult.dateOfSubmit).toLocaleDateString()}</Typography>
+          )}
         </PatientListGrid>
       </CardContent>
     </LinkCard>

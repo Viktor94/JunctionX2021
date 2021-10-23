@@ -17,9 +17,10 @@ public class CarePlanForm {
   private Long id;
 
   @JsonIgnore
+  @JoinColumn(name = "patient_id")
   @ManyToOne private Patient patient;
-
-  @OneToMany private List<Answer> answers;
+  
+  @OneToMany(mappedBy = "form") private List<Answer> answers;
 
   private Integer pulse;
   private OffsetDateTime dateOfSubmit;

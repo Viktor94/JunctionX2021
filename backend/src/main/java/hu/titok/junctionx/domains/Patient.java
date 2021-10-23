@@ -18,7 +18,7 @@ public class Patient extends User {
 
   @JsonIgnore
   @ManyToMany private List<User> careTakerList;
-  @OneToMany private List<CarePlanForm> carePlanFormList;
+  @OneToMany(mappedBy = "patient") private List<CarePlanForm> carePlanFormList;
 
   private String primaryCareProvider;
   private String surgeon;
@@ -33,7 +33,7 @@ public class Patient extends User {
   @Enumerated(EnumType.STRING)
   private CancerType cancerType;
 
-  @OneToMany private List<Question> questions;
+  @ManyToMany private List<Question> questions;
 
   public Patient(String email, String password, String fullName, String phoneNumber) {
     super(email, password, fullName, phoneNumber);

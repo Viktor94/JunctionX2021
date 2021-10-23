@@ -18,6 +18,9 @@ public class Answer {
 
   @JsonIgnore
   @ManyToOne private Patient patient;
+  
+  @JoinColumn(name = "care_plan_form_id")
+  @ManyToOne private CarePlanForm form;
 
   @ManyToOne private Question question;
 
