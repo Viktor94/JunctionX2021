@@ -1,14 +1,14 @@
 package hu.titok.junctionx.services.alarmProcess;
 
-import hu.titok.junctionx.domains.AlarmProcess;
-import hu.titok.junctionx.domains.Answer;
-import hu.titok.junctionx.domains.Question;
-import hu.titok.junctionx.domains.User;
+import hu.titok.junctionx.domains.*;
+import hu.titok.junctionx.domains.enums.Priority;
 import hu.titok.junctionx.domains.enums.QuestionType;
+import hu.titok.junctionx.domains.enums.Urgency;
 import hu.titok.junctionx.pojos.StatusReport;
 import hu.titok.junctionx.repositories.AlarmProcessRepository;
 import hu.titok.junctionx.services.answers.AnswerService;
 import hu.titok.junctionx.services.email.EmailSenderService;
+import hu.titok.junctionx.services.users.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -27,6 +27,7 @@ public class AlarmProcessServiceImpl implements AlarmProcessService {
     private final AlarmProcessRepository alarmProcessRepository;
     private final EmailSenderService emailSenderService;
     private final AnswerService answerService;
+    private final UserService userService;
     
     @Override
     public List<StatusReport> manageSymptom(User user, List<Answer> answers) {
@@ -58,7 +59,6 @@ public class AlarmProcessServiceImpl implements AlarmProcessService {
                         if (StringUtils.isNotBlank(alarmProcess.getAdvice())) {
                             statusReports.add(new StatusReport(alarmProcess.getUrgency(), alarmProcess.getAdvice()));
                         }
-                        // things to do
                         break;
                     case NOTIFY_CARE_TEAM:
                         shouldRaisePatientPriority = true;
@@ -77,11 +77,17 @@ public class AlarmProcessServiceImpl implements AlarmProcessService {
                     user,
                     statusReports.stream().map(StatusReport::getMessage).collect(Collectors.toList()));
             log.info("Email sent!");
+            statusReports.add(new StatusReport(Urgency.LOW, "An email was sent to your care team and close relatives!"));
         }
         if (shouldRaisePatientPriority) {
-            // todo raise patient priority
+            var patient = (Patient) user;
+            patient.setPriority(Priority.HIGH);
+            userService.save(patient);
+            statusReports.add(new StatusReport(Urgency.MEDIUM, "Your care team has been notified!"));
         }
-        
+        if (statusReports.isEmpty()) {
+            statusReports.add(new StatusReport(Urgency.LOW, "No immediate action is necessary!"));
+        }
         return statusReports;
     }
 }
