@@ -28,30 +28,12 @@ const axios = require('axios').default;
 
 interface AddPatientFormProps {}
 
-const CANCER_TYPES = [
-  {
-    id: 1,
-    name: 'Lung cancer',
-    value: 'LUNG',
-    questionnaireQuestions: [],
-  },
-  {
-    id: 2,
-    name: 'Breast cancer',
-    value: 'BREAST',
-    questionnaireQuestions: [],
-  },
-  {
-    id: 3,
-    name: 'Kidney cancer',
-    value: 'KIDNEY',
-    questionnaireQuestions: [],
-  },
-]
-
 const YEARS = new Array(12).fill(true).map((_, i) => 2010 + i)
 
-const fixString = (cancerType: string) => {
+export const fixString = (cancerType: string) => {
+
+  if(cancerType === null) return ""
+
   cancerType = cancerType.replaceAll("_", " ")
   cancerType = cancerType.substring(0,1).concat(cancerType.substring(1).toLowerCase());
   return cancerType
@@ -62,13 +44,14 @@ export const AddPatientForm: React.FC<AddPatientFormProps> = () => {
   const [date, setDate] = useState(null);
   const [questions, setQuestions] = useState<Question[]>([]);
   const history = useHistory();
-
+  const [selectedCancerType, setSelectedCancerType] = useState("");
+  
   const { data, status } = useQuery('cancerTypes', () => api.data.getAllCancerType());
   
   if(!data) {
     return <CircularProgress />
   }
-
+  
   //const cancerTypes = data.data.map(type => fixString(type));
 
   const submitHandler = (event:any) => {
@@ -114,19 +97,17 @@ export const AddPatientForm: React.FC<AddPatientFormProps> = () => {
         <Stack spacing={4}>
           <Typography variant="h5">General Information</Typography>
           <Stack direction="row" spacing={4}>
-            <Stack flex={1}>
+            <Stack flex={1} spacing={3}>
               <TextField id="name" label="Patient Name" name="fullName"/>
               <TextField id="email" label="Patient Email" name="email"/>
               <TextField id="phone" label="Patient Phone" name="phoneNumber"/>
-              <Stack spacing={4}>
               <DatePicker 
                 renderInput={(params) => <MUITextField {...params}/>} 
                 label="Date of Birth" value={date} 
                 onChange={(newValue) => {setDate(newValue)}}
                 />
-                </Stack>
             </Stack>
-            <Stack flex={1}>
+            <Stack flex={1} spacing={3}>
               <TextField id="relativeName" label="Relative Name" name="relativeName"/>
               <TextField id="relativeEmail" label="Relative Email" name="relativeEmail"/>
               <TextField id="relativePhoneNumber" label="Relative Phone" name="relativePhoneNumber"/>
@@ -136,7 +117,12 @@ export const AddPatientForm: React.FC<AddPatientFormProps> = () => {
           <Typography variant="h5">Treatment Summary</Typography>
           <FormControl>
             <FormLabel>Type of cancer</FormLabel>
-            <Select value={data.data[0]} name="cancerType">
+            <Select 
+              value={selectedCancerType} 
+              displayEmpty={true}
+              renderValue={(value) => fixString(value) || "Select one"}
+              name="cancerType" 
+              onChange={(event) => setSelectedCancerType(event.target.value as any)}> 
               {data.data.map((type) => (
                 <MenuItem key={type} value={type}>
                   {fixString(type)}
