@@ -51,8 +51,6 @@ export const AddPatientForm: React.FC<AddPatientFormProps> = () => {
   if(!data) {
     return <CircularProgress />
   }
-  
-  //const cancerTypes = data.data.map(type => fixString(type));
 
   const submitHandler = (event:any) => {
     event.preventDefault();
@@ -75,7 +73,6 @@ export const AddPatientForm: React.FC<AddPatientFormProps> = () => {
 
     axios.post('http://localhost:8080/users', patient)
     .then(function (res: any) {
-      console.log(res)
       if(res.status === 200) {
         history.push("/admin");
       }
