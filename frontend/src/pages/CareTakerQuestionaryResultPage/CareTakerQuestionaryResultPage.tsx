@@ -1,4 +1,4 @@
-import { Card, CardContent, Stack, CircularProgress } from '@mui/material'
+import { Card, CardContent, Stack, CircularProgress, Divider } from '@mui/material'
 import { BreadCrumbActiveItem, BreadCrumbDivider, BreadCrumbItem, Breadcrumbs } from 'components/page/Breadcrumbs'
 import { CareTakerPageBase } from 'components/page/CaretakerPageBase'
 //import { PATIENTS } from 'pages/CareTakerHomePage/components/PatientList'
@@ -40,13 +40,13 @@ export const CareTakerQuestionaryResultPage: React.FC = () => {
         <Card>
           <CardContent>
             <Stack spacing={6}>
-              {questionary.weight && <Stat label="Weight" value={questionary.weight} />}
+              {!!questionary.weight && <Stat label="Weight" value={questionary.weight} />}
               <Stack direction="row" spacing={4}>
-                {questionary.systolic && <Stat label="Systolic" value={questionary.systolic} />}
-                {questionary.diastolic && <Stat label="Diastolic" value={questionary.diastolic} />}
-                {questionary.pulse && <Stat label="Pulse" value={questionary.pulse} />}
+                {!!questionary.systolic && <Stat label="Systolic" value={questionary.systolic} />}
+                {!!questionary.diastolic && <Stat label="Diastolic" value={questionary.diastolic} />}
+                {!!questionary.pulse && <Stat label="Pulse" value={questionary.pulse} />}
               </Stack>
-              <Stack spacing={4}>
+              <Stack spacing={4} divider={<Divider />}>
                 {questionary.answers?.map((answer) => {
                   switch (answer.question!.questionType) {
                     case 'YES_NO':
@@ -54,9 +54,7 @@ export const CareTakerQuestionaryResultPage: React.FC = () => {
                         <BooleanAnswer question={answer.question?.description ?? ''} answer={answer.yesNoResponse!} />
                       )
                     case 'NUMERIC':
-                      return (
-                        <NumericAnswer question={answer.question?.description ?? ''} answer={answer.numericResponse!} />
-                      )
+                      return <NumericAnswer question={answer.question!} answer={answer.numericResponse!} />
                     default:
                       return null
                   }
