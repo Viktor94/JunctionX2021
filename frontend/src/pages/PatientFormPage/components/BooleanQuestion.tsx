@@ -29,7 +29,7 @@ export const BooleanQuestion: React.FC<BooleanQuestionProps> = ({ question, addA
         <QuestionButton
           selected={value === false}
           onClick={() => {
-            addAnswer(question, { yesNoResponse: true })
+            addAnswer(question, { yesNoResponse: false })
             setValue(false)
           }}
         >
