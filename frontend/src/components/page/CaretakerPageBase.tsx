@@ -21,6 +21,8 @@ export const CareTakerPageBase: React.FC<CareTakerPageBaseProps> = ({ children, 
             maxWidth="70rem"
             ml="auto"
             mr="auto"
+            pl={3}
+            pr={3}
           >
             <Typography variant="h6">{title}</Typography>
             <Box>{action}</Box>
