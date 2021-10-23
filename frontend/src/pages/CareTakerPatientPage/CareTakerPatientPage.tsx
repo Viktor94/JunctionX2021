@@ -96,8 +96,8 @@ export const CareTakerPatientPage: React.FC = () => {
               <Stack spacing={1}>
                 <Typography variant="h6">Follow-up questionnaires</Typography>
                 <List>
-                  {patient.carePlanFormList
-                    ?.sort((a, b) => (a.dateOfSubmit! > b.dateOfSubmit! ? -1 : 1))
+                  {[...patient.carePlanFormList!]
+                    .sort((a, b) => (a.dateOfSubmit! > b.dateOfSubmit! ? -1 : 1))
                     .map((questionary) => (
                       <ListItemButton
                         key={questionary.id}
