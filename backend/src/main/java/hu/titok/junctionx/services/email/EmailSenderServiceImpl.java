@@ -6,11 +6,13 @@ import hu.titok.junctionx.domains.RegistrationToken;
 import hu.titok.junctionx.domains.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+@Service
 public class EmailSenderServiceImpl implements EmailSenderService {
 
   private final MailSenderHelper mailSenderHelper;
