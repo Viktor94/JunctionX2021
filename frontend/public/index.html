@@ -23,6 +23,18 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <title>React App</title>
+    <script>
+      ;(function () {
+        setTimeout(() => {
+          var st = document.createElement('script')
+          st.type = 'text/javascript'
+          st.async = true
+          st.src = 'https://www.researchgate.net/javascript/plugin/plugin-api-min.js'
+          var s = document.getElementsByTagName('script')[0]
+          s.parentNode.insertBefore(st, s)
+        }, 1000)
+      })()
+    </script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
@@ -37,15 +49,5 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
-    <script>
-      ;(function () {
-        var st = document.createElement('script')
-        st.type = 'text/javascript'
-        st.async = true
-        st.src = 'https://www.researchgate.net/javascript/plugin/plugin-api-min.js'
-        var s = document.getElementsByTagName('script')[0]
-        s.parentNode.insertBefore(st, s)
-      })()
-    </script>
   </body>
 </html>
