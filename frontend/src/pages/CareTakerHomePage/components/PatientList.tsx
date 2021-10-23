@@ -1,6 +1,6 @@
-import { Box, Card, CardContent, Chip, Stack, styled, Typography } from '@mui/material'
+import { Box, CardContent, Chip, Stack, Typography } from '@mui/material'
+import { LinkCard } from 'components/LinkCard'
 import React from 'react'
-import { Link } from 'react-router-dom'
 
 export interface QuestionnaryResult {
   id: string
@@ -112,7 +112,7 @@ const PatientCard: React.FC<{ patient: Patient }> = ({ patient }) => {
   const lastQuestionnaryResult = patient.questionnaryResults[patient.questionnaryResults.length - 1]
 
   return (
-    <PatientCardRoot component={Link} to={`/admin/${patient.id}`}>
+    <LinkCard to={`/admin/${patient.id}`}>
       <CardContent>
         <PatientListGrid>
           <Typography>{patient.name}</Typography>
@@ -127,16 +127,6 @@ const PatientCard: React.FC<{ patient: Patient }> = ({ patient }) => {
           <Typography>{lastQuestionnaryResult?.date}</Typography>
         </PatientListGrid>
       </CardContent>
-    </PatientCardRoot>
+    </LinkCard>
   )
 }
-
-const PatientCardRoot = styled(Card)`
-  text-decoration: none;
-  transition: all ${(props) => props.theme.transitions.duration.shortest}ms;
-
-  &:hover,
-  &:focus {
-    background-color: #fafafa;
-  }
-` as typeof Card

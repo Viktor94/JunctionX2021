@@ -16,7 +16,6 @@ public class Patient extends User {
 
   @ManyToMany private List<User> careTakerList;
   @OneToMany private List<CarePlanForm> carePlanFormList;
-  @OneToMany private List<Symptom> symptomCounters;
 
   private String primaryCareProvider;
   private String surgeon;
@@ -24,7 +23,7 @@ public class Patient extends User {
   private String medicalOncologist;
   @Enumerated(EnumType.STRING)
   private Priority priority;
-  
+
   private String relativeName;
   private String relativePhoneNumber;
   private String relativeEmail;

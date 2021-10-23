@@ -12,19 +12,20 @@ import java.util.List;
 @Setter
 public class CarePlanForm {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @ManyToOne
-    private Patient patient;
+  @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    private Integer systolic;
-    private Integer diastolic;
-    private Integer pulse;
-    private OffsetDateTime dateOfSubmit;
-    private Integer weight;
-    private String longAnswer;
+  @ManyToOne private Patient patient;
 
-    @OneToMany
-    private List<Answer> answers;
+  @OneToMany private List<Answer> answers;
+
+  private Integer pulse;
+  private OffsetDateTime dateOfSubmit;
+  private Integer weight;
+  private String longAnswer;
+
+  private Integer systolic;
+  private Integer diastolic;
+
+  private String bloodPressureStatus;
 }

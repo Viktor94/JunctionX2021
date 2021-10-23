@@ -3,6 +3,7 @@ package hu.titok.junctionx.services.Careplan;
 import hu.titok.junctionx.domains.CarePlanForm;
 import hu.titok.junctionx.repositories.AnswerRepository;
 import hu.titok.junctionx.repositories.CarePlanFormRepository;
+import hu.titok.junctionx.services.HyperTensionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,17 +14,22 @@ public class CarePlanFormServiceImpl implements CarePlanFormService {
 
   private final CarePlanFormRepository carePlanFormRepository;
   private final AnswerRepository answerRepository;
+  private final HyperTensionService diabetesAndHyperTensionService;
 
   @Autowired
   public CarePlanFormServiceImpl(
-      CarePlanFormRepository carePlanFormRepository, AnswerRepository answerRepository) {
+      CarePlanFormRepository carePlanFormRepository,
+      AnswerRepository answerRepository,
+      HyperTensionService diabetesAndHyperTensionService) {
     this.carePlanFormRepository = carePlanFormRepository;
     this.answerRepository = answerRepository;
+    this.diabetesAndHyperTensionService = diabetesAndHyperTensionService;
   }
 
   @Override
   public void save(CarePlanForm carePlanForm) {
     answerRepository.saveAll(carePlanForm.getAnswers());
+    diabetesAndHyperTensionService.setBloodPressureStatus(carePlanForm.getId());
     carePlanFormRepository.save(carePlanForm);
   }
 
