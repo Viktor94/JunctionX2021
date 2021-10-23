@@ -1,10 +1,12 @@
 package hu.titok.junctionx.services.Careplan;
 
+import hu.titok.junctionx.domains.Answer;
 import hu.titok.junctionx.domains.CarePlanForm;
 import hu.titok.junctionx.domains.Patient;
+import hu.titok.junctionx.pojos.StatusReport;
 import hu.titok.junctionx.repositories.AnswerRepository;
 import hu.titok.junctionx.repositories.CarePlanFormRepository;
-import hu.titok.junctionx.repositories.UserRepository;
+import hu.titok.junctionx.services.alarmProcess.AlarmProcessService;
 import hu.titok.junctionx.services.users.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -20,9 +23,10 @@ public class CarePlanFormServiceImpl implements CarePlanFormService {
   private final CarePlanFormRepository carePlanFormRepository;
   private final AnswerRepository answerRepository;
   private final UserService userService;
+  private final AlarmProcessService alarmProcessService;
 
   @Override
-  public void submitForm(long patientId, CarePlanForm carePlanForm) {
+  public List<StatusReport> submitForm(long patientId, CarePlanForm carePlanForm) {
     var patient = (Patient) userService.getById(patientId);
     carePlanForm.setDateOfSubmit(OffsetDateTime.now());
     carePlanForm.setPatient(patient);
@@ -32,8 +36,13 @@ public class CarePlanFormServiceImpl implements CarePlanFormService {
       answer.setAnswerDate(LocalDate.now());
     }
     answerRepository.saveAll(answers);
+    answerRepository.flush();
     carePlanFormRepository.save(carePlanForm);
     setBloodPressureStatus(carePlanForm.getId());
+    
+    var questions = answers.stream().map(Answer::getQuestion).collect(Collectors.toList());
+    
+    return alarmProcessService.manageSymptom(patient, questions);
   }
 
   @Override

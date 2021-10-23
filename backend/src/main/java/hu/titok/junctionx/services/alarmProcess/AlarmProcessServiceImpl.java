@@ -1,13 +1,15 @@
 package hu.titok.junctionx.services.alarmProcess;
 
 import hu.titok.junctionx.domains.AlarmProcess;
-import hu.titok.junctionx.domains.Frequency;
+import hu.titok.junctionx.domains.Question;
 import hu.titok.junctionx.domains.User;
 import hu.titok.junctionx.pojos.StatusReport;
 import hu.titok.junctionx.repositories.AlarmProcessRepository;
+import hu.titok.junctionx.services.answers.AnswerService;
 import hu.titok.junctionx.services.email.EmailSenderService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -15,27 +17,25 @@ import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
+@RequiredArgsConstructor
 public class AlarmProcessServiceImpl implements AlarmProcessService {
     
     private final AlarmProcessRepository alarmProcessRepository;
     private final EmailSenderService emailSenderService;
-    
-    @Autowired
-    public AlarmProcessServiceImpl(
-            AlarmProcessRepository alarmProcessRepository, EmailSenderService emailSenderService) {
-        this.alarmProcessRepository = alarmProcessRepository;
-        this.emailSenderService = emailSenderService;
-    }
+    private final AnswerService answerService;
     
     @Override
-    public List<StatusReport> manageSymptom(Locale locale, User user, List<Frequency> frequencies) {
+    public List<StatusReport> manageSymptom(User user, List<Question> questions) {
         List<StatusReport> statusReports = new ArrayList<>();
         boolean isEmailRequired = false;
-        for (Frequency frequency : frequencies) {
+        for (var question : questions) {
+            var symptomFrequency = answerService.countSignificantYesNoAnswers(true, user.getId(), question.getCancerType(), question.getSymptomType());
             AlarmProcess process =
                     alarmProcessRepository.findByCancerTypeAndSymptomTypeAndFrequency(
-                            frequency.getCancerType(), frequency.getSymptom(), frequency.getFrequency());
+                            question.getCancerType(), question.getSymptomType(), symptomFrequency);
+            if (process == null) continue;
             for (var instruction : process.getInstructions()) {
                 switch (instruction) {
                     case SEND_EMAIL:
@@ -61,9 +61,10 @@ public class AlarmProcessServiceImpl implements AlarmProcessService {
         }
         if (isEmailRequired) {
             emailSenderService.sendNotificationEmail(
-                    locale,
+                    Locale.ENGLISH,
                     user,
                     statusReports.stream().map(StatusReport::getMessage).collect(Collectors.toList()));
+            log.info("Email sent!");
         }
         
         return statusReports;
