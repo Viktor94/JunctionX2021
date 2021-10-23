@@ -10,6 +10,7 @@ import {
   Stepper,
   Dialog,
   DialogContent,
+  InputAdornment,
 } from '@mui/material'
 import { TextField } from 'components/form/TextField'
 import produce from 'immer'
@@ -26,7 +27,7 @@ interface PatientFormProps {
   questions: Question[]
 }
 
-type Phase = 'intro' | 'health-problems' | 'general-health' | 'other'
+type Phase = 'intro' | 'health-problems' | 'numeric-data' | 'general-health' | 'other'
 
 export const PatientForm: React.FC<PatientFormProps> = ({ questions }) => {
   const yesNoQuestions = questions.filter((question) => question.questionType === 'YES_NO')
@@ -45,7 +46,7 @@ export const PatientForm: React.FC<PatientFormProps> = ({ questions }) => {
     diastolic: 0,
   })
 
-  const phases: Phase[] = ['intro', 'health-problems', 'general-health', 'other']
+  const phases: Phase[] = ['intro', 'health-problems', 'general-health', 'numeric-data', 'other']
   const [phaseIndex, setPhaseIndex] = useState(0)
   const [response, setResponse] = useState<null | StatusReport[]>(null)
   const phase = phases[phaseIndex]
@@ -99,7 +100,10 @@ export const PatientForm: React.FC<PatientFormProps> = ({ questions }) => {
                 <StepLabel>Mental Health</StepLabel>
               </Step>
               <Step>
-                <StepLabel>General</StepLabel>
+                <StepLabel>Numeric data</StepLabel>
+              </Step>
+              <Step>
+                <StepLabel>Other</StepLabel>
               </Step>
             </Stepper>
           )}
@@ -114,6 +118,19 @@ export const PatientForm: React.FC<PatientFormProps> = ({ questions }) => {
             )}
             {phase === 'general-health' && (
               <GeneralHealthPhase questions={numericQuestions} next={next} addAnswer={addAnswer} />
+            )}
+            {phase === 'numeric-data' && (
+              <NumericDataPhase
+                next={next}
+                setData={(key, val) => {
+                  setValue((value) =>
+                    produce(value, (draft) => {
+                      ;(draft as any)[key] = val
+                    })
+                  )
+                }}
+                addAnswer={addAnswer}
+              />
             )}
             {phase === 'other' && <OtherPhase questions={numericQuestions} next={submit} addAnswer={addAnswer} />}
           </Stack>
@@ -176,6 +193,66 @@ const GeneralHealthPhase: React.FC<PhaseProps & { questions: Question[] }> = ({ 
           {questions.map((question) => (
             <QuestionBase addAnswer={addAnswer} key={question.id} question={question} />
           ))}
+        </Stack>
+      </Stack>
+      <Button onClick={next} fullWidth size="large" variant="contained">
+        Next step
+      </Button>
+    </Stack>
+  )
+}
+
+const NumericDataPhase: React.FC<PhaseProps & { setData: (key: string, value: string | number) => void }> = ({
+  next,
+  setData,
+}) => {
+  return (
+    <Stack spacing={4}>
+      <Stack spacing={2}>
+        <Stack spacing={4}>
+          <Stack direction="row" spacing={4}>
+            <Box flex={1}>
+              <TextField
+                label="Weight"
+                type="number"
+                endAdornment={<InputAdornment position="end">Kg</InputAdornment>}
+                onChange={(e) => {
+                  setData('weight', parseInt(e.target.value))
+                }}
+              />
+            </Box>
+            <Box flex={1} />
+            <Box flex={1} />
+          </Stack>
+          <Stack direction="row" spacing={4}>
+            <Box flex={1}>
+              <TextField
+                label="Systolic"
+                type="number"
+                onChange={(e) => {
+                  setData('systolic', parseInt(e.target.value))
+                }}
+              />
+            </Box>
+            <Box flex={1}>
+              <TextField
+                label="Diastolic"
+                type="number"
+                onChange={(e) => {
+                  setData('diastolic', parseInt(e.target.value))
+                }}
+              />
+            </Box>
+            <Box flex={1}>
+              <TextField
+                label="Pulse"
+                type="number"
+                onChange={(e) => {
+                  setData('pulse', parseInt(e.target.value))
+                }}
+              />
+            </Box>
+          </Stack>
         </Stack>
       </Stack>
       <Button onClick={next} fullWidth size="large" variant="contained">
