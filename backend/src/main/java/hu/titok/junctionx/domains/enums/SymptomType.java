@@ -1,6 +1,10 @@
 package hu.titok.junctionx.domains.enums;
 
 public enum SymptomType {
+  HAPPINESS,
+  CALMNESS,
+  EXHAUSTED,
+  DEPRESSED,
   HEADACHE,
   SKIN_CHANGE,
   FATIGUE,
@@ -21,5 +25,6 @@ public enum SymptomType {
   INCONTINENCE,
   BLADDER_IRRITATION,
   SEXUAL_PROBLEMS,
-  FERTILITY
+  FERTILITY,
+  WEIGHT_LOSS
 }

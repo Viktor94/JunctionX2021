@@ -1,6 +1,7 @@
 package hu.titok.junctionx.domains.enums;
 
 public enum CancerType {
+  COMMON,
   BLADDER,
   BREAST,
   COLORECTAL,
