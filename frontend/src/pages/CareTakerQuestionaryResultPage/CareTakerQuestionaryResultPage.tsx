@@ -8,6 +8,7 @@ import { BooleanAnswer } from './components/BooleanAnswer'
 import { useQuery } from 'react-query'
 import { api } from 'lib/api/api'
 import { NumericAnswer } from './components/NumericAnswer'
+import { Stat } from 'components/Stat'
 
 export const CareTakerQuestionaryResultPage: React.FC = () => {
   const { id, questionaryId } = useParams<{ id: string; questionaryId: string }>()
@@ -38,21 +39,29 @@ export const CareTakerQuestionaryResultPage: React.FC = () => {
       <Stack spacing={1}>
         <Card>
           <CardContent>
-            <Stack spacing={4}>
-              {questionary.answers?.map((answer) => {
-                switch (answer.question!.questionType) {
-                  case 'YES_NO':
-                    return (
-                      <BooleanAnswer question={answer.question?.description ?? ''} answer={answer.yesNoResponse!} />
-                    )
-                  case 'NUMERIC':
-                    return (
-                      <NumericAnswer question={answer.question?.description ?? ''} answer={answer.numericResponse!} />
-                    )
-                  default:
-                    return null
-                }
-              })}
+            <Stack spacing={6}>
+              {questionary.weight && <Stat label="Weight" value={questionary.weight} />}
+              <Stack direction="row" spacing={4}>
+                {questionary.systolic && <Stat label="Systolic" value={questionary.systolic} />}
+                {questionary.diastolic && <Stat label="Diastolic" value={questionary.diastolic} />}
+                {questionary.pulse && <Stat label="Pulse" value={questionary.pulse} />}
+              </Stack>
+              <Stack spacing={4}>
+                {questionary.answers?.map((answer) => {
+                  switch (answer.question!.questionType) {
+                    case 'YES_NO':
+                      return (
+                        <BooleanAnswer question={answer.question?.description ?? ''} answer={answer.yesNoResponse!} />
+                      )
+                    case 'NUMERIC':
+                      return (
+                        <NumericAnswer question={answer.question?.description ?? ''} answer={answer.numericResponse!} />
+                      )
+                    default:
+                      return null
+                  }
+                })}
+              </Stack>
             </Stack>
           </CardContent>
         </Card>
