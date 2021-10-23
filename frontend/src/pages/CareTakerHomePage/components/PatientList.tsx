@@ -15,15 +15,15 @@ export interface QuestionnaryResult {
 }
 
 export const PatientList: React.FC = () => {
-  const { data, status } = useQuery('patients', () => api.users.getAllPatients());
+  const { data, status } = useQuery('patients', () => api.users.getAllPatients())
 
-  if(!data) {
-    return <CircularProgress/>
+  if (!data) {
+    return <CircularProgress />
   }
 
-  const importantPatients = data?.data.filter((patient) => patient.priority === 'HIGH');
-  const mediumPrioPatients = data?.data.filter((patient) => patient.priority === 'MEDIUM');
-  const lowPrioPatients = data?.data.filter((patient) => patient.priority === 'LOW');
+  const importantPatients = data?.data.filter((patient) => patient.priority === 'HIGH')
+  const mediumPrioPatients = data?.data.filter((patient) => patient.priority === 'MEDIUM')
+  const lowPrioPatients = data?.data.filter((patient) => patient.priority === 'LOW')
 
   return (
     <Stack spacing={6}>
@@ -66,7 +66,7 @@ export const PatientList: React.FC = () => {
 
 const PatientListGrid: React.FC = ({ children }) => {
   return (
-    <Box alignItems="center" display="grid" gridTemplateColumns="150px 100px auto" gap="32px">
+    <Box alignItems="center" display="grid" gridTemplateColumns="200px 100px auto" gap="40px">
       {children}
     </Box>
   )
@@ -88,7 +88,7 @@ const PatientCard: React.FC<{ patient: Patient }> = ({ patient }) => {
   const priorityToColor: Record<string, string> = {
     LOW: '#38913c',
     HIGH: '#ff7043',
-    MEDIUM: '#ebba34'
+    MEDIUM: '#ebba34',
   }
 
   const lastQuestionnaryResult = { id: '1', date: '2021. 10. 22.', answers: [] }
