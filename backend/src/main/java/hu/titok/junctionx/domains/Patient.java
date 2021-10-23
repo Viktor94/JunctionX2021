@@ -1,6 +1,7 @@
 package hu.titok.junctionx.domains;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import hu.titok.junctionx.domains.enums.CancerType;
 import hu.titok.junctionx.domains.enums.Priority;
 import hu.titok.junctionx.domains.enums.Role;
 import lombok.Getter;
@@ -29,6 +30,7 @@ public class Patient extends User {
   private String relativeName;
   private String relativePhoneNumber;
   private String relativeEmail;
+  private CancerType cancerType;
 
   @OneToMany private List<Question> questions;
 
