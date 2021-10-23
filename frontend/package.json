@@ -51,5 +51,11 @@
   "devDependencies": {
     "lint-staged": "^11.2.3",
     "prettier": "2.4.1"
+  },
+  "eslintConfig": {
+    "extends": "react-app",
+    "rules": {
+      "import/first": "off"
+    }
   }
 }

@@ -142,8 +142,6 @@ export interface RegistrationPayload {
   password?: string
 }
 
-
-
 export type QueryParamsType = Record<string | number, any>
 
 export interface FullRequestParams extends Omit<AxiosRequestConfig, 'data' | 'params' | 'url' | 'responseType'> {
