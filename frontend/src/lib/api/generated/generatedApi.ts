@@ -1,22 +1,19 @@
-import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, ResponseType } from 'axios'
-
 export interface Answer {
   /** @format int64 */
   id?: number
+  patient?: Patient
   question?: Question
   response?: boolean
+
+  /** @format date */
+  occurrenceDate?: string
 }
 
 export interface CarePlanForm {
   /** @format int64 */
   id?: number
   patient?: Patient
-
-  /** @format int32 */
-  systolic?: number
-
-  /** @format int32 */
-  diastolic?: number
+  answers?: Answer[]
 
   /** @format int32 */
   pulse?: number
@@ -27,7 +24,13 @@ export interface CarePlanForm {
   /** @format int32 */
   weight?: number
   longAnswer?: string
-  answers?: Answer[]
+
+  /** @format int32 */
+  systolic?: number
+
+  /** @format int32 */
+  diastolic?: number
+  bloodPressureStatus?: string
 }
 
 export interface Patient {
@@ -40,9 +43,9 @@ export interface Patient {
 
   /** @format date */
   dateOfBirth?: string
+  role?: 'PATIENT' | 'CARE_TAKER'
   careTakerList?: User[]
   carePlanFormList?: CarePlanForm[]
-  symptomCounters?: Symptom[]
   primaryCareProvider?: string
   surgeon?: string
   radiationOncologist?: string
@@ -95,37 +98,6 @@ export interface Question {
   description?: string
 }
 
-export interface Symptom {
-  /** @format int64 */
-  id?: number
-  patient?: Patient
-  symptomType?:
-    | 'HEADACHE'
-    | 'SKIN_CHANGE'
-    | 'FATIGUE'
-    | 'DRY_MOUTH'
-    | 'DIFFICULT_SWALLOWING'
-    | 'JAW_STIFFNESS'
-    | 'HAIR_LOSS'
-    | 'TOOTH_DECAY'
-    | 'BREATH_SHORTNESS'
-    | 'SHOULDER_STIFFNESS'
-    | 'COUGH'
-    | 'FEVER'
-    | 'LOSS_OF_APETITE'
-    | 'VOMITING'
-    | 'BOWEL_CRAMPING'
-    | 'DIARRHEA'
-    | 'RECTAL_BLEEDING'
-    | 'INCONTINENCE'
-    | 'BLADDER_IRRITATION'
-    | 'SEXUAL_PROBLEMS'
-    | 'FERTILITY'
-
-  /** @format date-time */
-  occurrenceDate?: string
-}
-
 export interface User {
   /** @format int64 */
   id?: number
@@ -136,11 +108,14 @@ export interface User {
 
   /** @format date */
   dateOfBirth?: string
+  role?: 'PATIENT' | 'CARE_TAKER'
 }
 
 export interface RegistrationPayload {
   password?: string
 }
+
+import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, ResponseType } from 'axios'
 
 export type QueryParamsType = Record<string | number, any>
 
@@ -293,6 +268,20 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     getCarePlanForm: (userId: number, params: RequestParams = {}) =>
       this.request<object, any>({
         path: `/users/${userId}`,
+        method: 'GET',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags user-controller
+     * @name GetAllPatients
+     * @request GET:/users/patients
+     */
+    getAllPatients: (params: RequestParams = {}) =>
+      this.request<Patient[], any>({
+        path: `/users/patients`,
         method: 'GET',
         ...params,
       }),

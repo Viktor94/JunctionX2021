@@ -2,14 +2,24 @@ import { Card, CardContent, Link, List, ListItemButton, Stack, Typography } from
 import { Breadcrumbs, BreadCrumbActiveItem, BreadCrumbDivider, BreadCrumbItem } from 'components/page/Breadcrumbs'
 import { CareTakerPageBase } from 'components/page/CaretakerPageBase'
 import { Stat } from 'components/Stat'
-import { PATIENTS } from 'pages/CareTakerHomePage/components/PatientList'
 import React from 'react'
 import { useParams } from 'react-router'
 import { Link as RouterLink } from 'react-router-dom'
+import { useQuery } from 'react-query'
+import { api } from 'lib/api/api'
+import { CircularProgress } from '@mui/material'
 
 export const CareTakerPatientPage: React.FC = () => {
   const { id } = useParams<{ id: string }>()
-  const patient = PATIENTS.find((patient) => patient.id === id)!
+
+  const { data, status } = useQuery('patients', () => api.users.getAllPatients());
+
+  if(!data) {
+    return <CircularProgress/>
+  }
+  const patient = data.data.find((patient) => patient.id === Number.parseInt(id))!
+
+  const questionnaryResults = [{ id: '1', date: '2021. 10. 22.', answers: [] }, { id: '2', date: '2022. 12. 22.', answers: [] }];
 
   return (
     <CareTakerPageBase
@@ -17,7 +27,7 @@ export const CareTakerPatientPage: React.FC = () => {
         <Breadcrumbs>
           <BreadCrumbActiveItem to={`/admin`}>Patients</BreadCrumbActiveItem>
           <BreadCrumbDivider />
-          <BreadCrumbItem>{patient.name}</BreadCrumbItem>
+          <BreadCrumbItem>{patient.fullName}</BreadCrumbItem>
         </Breadcrumbs>
       }
     >
@@ -26,20 +36,20 @@ export const CareTakerPatientPage: React.FC = () => {
           <Stack spacing={6}>
             <Stack spacing={1}>
               <Typography variant="h6">General</Typography>
-              <Stat label="Email address" value={patient.email} />
+              <Stat label="Email address" value={patient.email!} />
             </Stack>
             <Stack spacing={1}>
               <Typography variant="h6">Treatment summary</Typography>
               <Stack direction="row" spacing={6}>
-                <Stat label="Type of cancer" value={patient.canceryType} />
-                <Stat label="Year of diagnosis" value={patient.yearOfDiagnosis} />
+                <Stat label="Type of cancer" value="dummy cancer type" />
+                <Stat label="Year of diagnosis" value="dummy year 1999" />
               </Stack>
             </Stack>
             <Stack spacing={1}>
               <Typography variant="h6">Follow-up questionnaires</Typography>
               <List>
-                {patient.questionnaryResults.map((questionary) => (
-                  <ListItemButton component={RouterLink} to={`/admin/${patient.id}/${questionary.id}`}>
+                {questionnaryResults.map((questionary) => (
+                  <ListItemButton key={questionary.id} component={RouterLink} to={`/admin/${patient.id}/${questionary.id}`}>
                     <Typography>
                       <Link>{questionary.date}</Link>
                     </Typography>

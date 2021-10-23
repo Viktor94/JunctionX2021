@@ -1,5 +1,6 @@
 package hu.titok.junctionx.services.users;
 
+import hu.titok.junctionx.domains.Patient;
 import hu.titok.junctionx.domains.User;
 import org.springframework.stereotype.Service;
 
@@ -15,4 +16,6 @@ public interface UserService {
   User getById(Long id);
 
   List<User> getAll();
+
+  List<Patient> getAllPatient();
 }

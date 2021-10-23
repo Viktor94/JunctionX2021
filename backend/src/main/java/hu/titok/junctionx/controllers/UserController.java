@@ -5,6 +5,8 @@ import hu.titok.junctionx.services.users.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -27,5 +29,10 @@ public class UserController {
     Patient patient = (Patient) userService.getById(userID);
 
     return ResponseEntity.ok(patient);
+  }
+
+  @GetMapping("/patients")
+  public ResponseEntity<List<Patient>> getAllPatients() {
+    return ResponseEntity.ok(userService.getAllPatient());
   }
 }
