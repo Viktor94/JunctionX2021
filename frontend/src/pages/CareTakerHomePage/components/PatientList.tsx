@@ -25,8 +25,6 @@ export const PatientList: React.FC = () => {
   const mediumPrioPatients = data?.data.filter((patient) => patient.priority === 'MEDIUM');
   const lowPrioPatients = data?.data.filter((patient) => patient.priority === 'LOW');
 
-  console.log(importantPatients);
-
   return (
     <Stack spacing={6}>
       <Stack spacing={3}>
