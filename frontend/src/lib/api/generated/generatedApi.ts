@@ -58,6 +58,7 @@ export interface Patient {
   relativePhoneNumber?: string
   relativeEmail?: string
   cancerType?:
+    | 'COMMON'
     | 'BLADDER'
     | 'BREAST'
     | 'COLORECTAL'
@@ -77,6 +78,7 @@ export interface Question {
   /** @format int64 */
   id?: number
   cancerType?:
+    | 'COMMON'
     | 'BLADDER'
     | 'BREAST'
     | 'COLORECTAL'
@@ -90,6 +92,10 @@ export interface Question {
     | 'THYROID'
     | 'UTERINE'
   symptomType?:
+    | 'HAPPINESS'
+    | 'CALMNESS'
+    | 'EXHAUSTED'
+    | 'DEPRESSED'
     | 'HEADACHE'
     | 'SKIN_CHANGE'
     | 'FATIGUE'
@@ -111,6 +117,7 @@ export interface Question {
     | 'BLADDER_IRRITATION'
     | 'SEXUAL_PROBLEMS'
     | 'FERTILITY'
+    | 'WEIGHT_LOSS'
   questionType?: 'YES_NO' | 'NUMERIC' | 'TEXT'
   description?: string
 }
@@ -122,6 +129,11 @@ export interface StatusReport {
 
 export interface RegistrationPayload {
   password?: string
+}
+
+export interface RiskFactorAndPrevention {
+  riskFactor?: string
+  prevention?: string
 }
 
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, ResponseType } from 'axios'
@@ -350,25 +362,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @tags risk-factor-and-prevention-controller
-     * @name Tips
-     * @request GET:/prevention/tips
-     */
-    tips: (params: RequestParams = {}) =>
-      this.request<string[], any>({
-        path: `/prevention/tips`,
-        method: 'GET',
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags risk-factor-and-prevention-controller
      * @name RiskFactors
      * @request GET:/prevention/risk-factors
      */
     riskFactors: (params: RequestParams = {}) =>
-      this.request<string[], any>({
+      this.request<RiskFactorAndPrevention[], any>({
         path: `/prevention/risk-factors`,
         method: 'GET',
         ...params,
