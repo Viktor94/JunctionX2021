@@ -14,7 +14,7 @@ export const CareTakerPageBase: React.FC<CareTakerPageBaseProps> = ({ children, 
         <AppBar position="static">
           <Toolbar>
             <Box display="flex" justifyContent="space-between" width="100%" alignItems="center" m="0px 60px 0px 40px">
-              <img src="assets/logo.png" alt="logo" width="150" height="75"/>
+              <img src="/assets/logo.png" alt="logo" width="150" height="75"/>
               <Typography color="inherit">Dr. Suresh H Advani</Typography>
             </Box>
           </Toolbar>
