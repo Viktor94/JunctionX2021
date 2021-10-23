@@ -1,8 +1,12 @@
 package hu.titok.junctionx.services.users;
 
+import hu.titok.junctionx.domains.CareTaker;
+import hu.titok.junctionx.domains.Patient;
 import hu.titok.junctionx.domains.User;
 import hu.titok.junctionx.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

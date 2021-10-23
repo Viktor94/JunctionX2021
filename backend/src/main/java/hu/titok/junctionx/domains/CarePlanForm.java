@@ -13,7 +13,7 @@ import java.util.List;
 public class CarePlanForm {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
     private Patient patient;

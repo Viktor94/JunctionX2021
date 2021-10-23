@@ -14,7 +14,7 @@ import java.util.UUID;
 @NoArgsConstructor
 public class RegistrationToken {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "token_id", length = 250)
     private Long tokenid;
 
