@@ -132,8 +132,8 @@
                         <configuration>
                             <inputSpec>${project.basedir}/../openapi/api.yaml</inputSpec>
                             <modelPackage>hu.titok.junctionx.payload</modelPackage>
-                            <apiPackage>hu.titok.junctionx.api</apiPackage>
                             <language>spring</language>
+                            <generateApis>false</generateApis>
                             <generateApiTests>false</generateApiTests>
                             <generateModelTests>false</generateModelTests>
                             <generateSupportingFiles>false</generateSupportingFiles>
@@ -141,7 +141,6 @@
                                 <java8>true</java8>
                                 <interfaceOnly>true</interfaceOnly>
                                 <dateLibrary>java8</dateLibrary>
-                                <defaultInterfaces>false</defaultInterfaces>
                             </configOptions>
                         </configuration>
                     </execution>

@@ -4,67 +4,13 @@ info:
   description: FollowUp
   version: 1.0.0
 paths:
-  /patient/{patientId}:
+  /fake:
     post:
-      tags:
-        - patient
-      description: Patients use this method to post data about their physical and mental health
-      operationId: submitPatientData
-      parameters:
-        - name: patientId
-          in: path
-          description: The patient's id
-          required: true
-          schema:
-            type: integer
-            format: int64
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatientHealthData'
-      responses:
-        202:
-          description: Accepted
-  /caretaker/{caretakerId}/patients:
-    get:
-      tags:
-        - caretaker
-      description: Get all patients of a given caretaker
-      operationId: getPatients
-      parameters:
-        - name: caretakerId
-          in: path
-          required: true
-          description: Id of the caretaker
-          schema:
-            type: integer
-            format: int64
+      description: Fake path
+      operationId: fake
       responses:
         200:
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/GeneralPatientInformation'
-  /caretaker/register-patient:
-    post:
-      tags:
-        - caretaker
-      description: 'This is a method for the caretakers to register a patient'
-      operationId: registerPatient
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatientRegistrationRequest'
-      responses:
-        201:
-          description: Created
+          description: Ok
 components:
   schemas:
     PatientRegistrationRequest:
