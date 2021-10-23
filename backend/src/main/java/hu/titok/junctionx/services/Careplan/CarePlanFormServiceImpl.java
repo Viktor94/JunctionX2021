@@ -1,6 +1,5 @@
 package hu.titok.junctionx.services.Careplan;
 
-import hu.titok.junctionx.domains.Answer;
 import hu.titok.junctionx.domains.CarePlanForm;
 import hu.titok.junctionx.domains.Patient;
 import hu.titok.junctionx.pojos.StatusReport;
@@ -14,7 +13,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -40,9 +38,7 @@ public class CarePlanFormServiceImpl implements CarePlanFormService {
     carePlanFormRepository.save(carePlanForm);
     setBloodPressureStatus(carePlanForm.getId());
     
-    var questions = answers.stream().map(Answer::getQuestion).collect(Collectors.toList());
-    
-    return alarmProcessService.manageSymptom(patient, questions);
+    return alarmProcessService.manageSymptom(patient, answers);
   }
 
   @Override
