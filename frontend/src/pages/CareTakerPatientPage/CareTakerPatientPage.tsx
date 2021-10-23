@@ -96,17 +96,19 @@ export const CareTakerPatientPage: React.FC = () => {
               <Stack spacing={1}>
                 <Typography variant="h6">Follow-up questionnaires</Typography>
                 <List>
-                  {patient.carePlanFormList?.map((questionary) => (
-                    <ListItemButton
-                      key={questionary.id}
-                      component={RouterLink}
-                      to={`/admin/${patient.id}/${questionary.id}`}
-                    >
-                      <Typography>
-                        <Link>{new Date(questionary.dateOfSubmit!).toLocaleDateString()}</Link>
-                      </Typography>
-                    </ListItemButton>
-                  ))}
+                  {patient.carePlanFormList
+                    ?.sort((a, b) => (a.dateOfSubmit! > b.dateOfSubmit! ? -1 : 1))
+                    .map((questionary) => (
+                      <ListItemButton
+                        key={questionary.id}
+                        component={RouterLink}
+                        to={`/admin/${patient.id}/${questionary.id}`}
+                      >
+                        <Typography>
+                          <Link>{new Date(questionary.dateOfSubmit!).toLocaleDateString()}</Link>
+                        </Typography>
+                      </ListItemButton>
+                    ))}
                 </List>
               </Stack>
             </Stack>
