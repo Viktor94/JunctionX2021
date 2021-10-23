@@ -20,7 +20,7 @@ export const BooleanQuestion: React.FC<BooleanQuestionProps> = ({ question, addA
         <QuestionButton
           selected={value === true}
           onClick={() => {
-            addAnswer(question, true)
+            addAnswer(question, { yesNoAnswer: true })
             setValue(true)
           }}
         >
@@ -29,7 +29,7 @@ export const BooleanQuestion: React.FC<BooleanQuestionProps> = ({ question, addA
         <QuestionButton
           selected={value === false}
           onClick={() => {
-            addAnswer(question, false)
+            addAnswer(question, { yesNoAnswer: true })
             setValue(false)
           }}
         >

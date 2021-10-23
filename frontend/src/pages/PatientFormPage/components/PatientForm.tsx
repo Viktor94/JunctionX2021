@@ -1,17 +1,32 @@
-import { Box, Stack, Typography, Button, Card, CardContent, Step, StepLabel, Stepper } from '@mui/material'
+import {
+  Box,
+  Stack,
+  Typography,
+  Button,
+  Card,
+  CardContent,
+  Step,
+  StepLabel,
+  Stepper,
+  Dialog,
+  DialogContent,
+} from '@mui/material'
+import { TextField } from 'components/form/TextField'
 import produce from 'immer'
 import { api } from 'lib/api/api'
-import { Question } from 'lib/api/generated/generatedApi'
+import { Question, StatusReport } from 'lib/api/generated/generatedApi'
 import React, { useEffect, useState } from 'react'
+import { useHistory } from 'react-router'
 import illustrationImg from '../media/illustration.svg'
 import { BooleanQuestion } from './BooleanQuestion'
 import { NumericQuestion } from './NumericQuestion'
+import { ResultDialog } from './ResultDialog'
 
 interface PatientFormProps {
   questions: Question[]
 }
 
-type Phase = 'intro' | 'health-problems' | 'other-conditions' | 'general'
+type Phase = 'intro' | 'health-problems' | 'general-health' | 'other'
 
 export const PatientForm: React.FC<PatientFormProps> = ({ questions }) => {
   const yesNoQuestions = questions.filter((question) => question.questionType === 'YES_NO')
@@ -30,9 +45,11 @@ export const PatientForm: React.FC<PatientFormProps> = ({ questions }) => {
     diastolic: 0,
   })
 
-  const phases: Phase[] = ['intro', 'health-problems', 'other-conditions', 'general']
+  const phases: Phase[] = ['intro', 'health-problems', 'general-health', 'other']
   const [phaseIndex, setPhaseIndex] = useState(0)
+  const [response, setResponse] = useState<null | StatusReport[]>(null)
   const phase = phases[phaseIndex]
+  const history = useHistory()
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -47,20 +64,30 @@ export const PatientForm: React.FC<PatientFormProps> = ({ questions }) => {
       produce(value, (draft) => {
         const index = draft.answers.findIndex((answer) => answer.question.id === question.id)
         if (index !== -1) {
-          draft.answers[index] = { question, yesNoResponse: val }
+          draft.answers[index] = { question, ...val }
         } else {
-          draft.answers.push({ question, yesNoResponse: val })
+          draft.answers.push({ question, ...val })
         }
       })
     )
   }
 
-  const submit = () => {
-    api.carePlanForm.submitForm(1, value)
+  const submit = async () => {
+    const response = await api.carePlanForm.submitForm(1, value)
+    setResponse(response.data)
   }
 
   return (
     <Stack direction="row" spacing={4}>
+      {response !== null && (
+        <ResultDialog
+          reports={response}
+          open={true}
+          onClose={() => {
+            history.push('/')
+          }}
+        ></ResultDialog>
+      )}
       <div>
         <Box position="sticky" top="15px">
           {phase !== 'intro' && (
@@ -69,7 +96,7 @@ export const PatientForm: React.FC<PatientFormProps> = ({ questions }) => {
                 <StepLabel>Health Problems</StepLabel>
               </Step>
               <Step>
-                <StepLabel>Other Medical Conditions</StepLabel>
+                <StepLabel>Mental Health</StepLabel>
               </Step>
               <Step>
                 <StepLabel>General</StepLabel>
@@ -85,10 +112,10 @@ export const PatientForm: React.FC<PatientFormProps> = ({ questions }) => {
             {phase === 'health-problems' && (
               <HealthProblemsPhase questions={yesNoQuestions} next={next} addAnswer={addAnswer} />
             )}
-            {phase === 'other-conditions' && (
-              <OtherConditionsPhase questions={numericQuestions} next={next} addAnswer={addAnswer} />
+            {phase === 'general-health' && (
+              <GeneralHealthPhase questions={numericQuestions} next={next} addAnswer={addAnswer} />
             )}
-            {phase === 'general' && <GeneralPhase questions={numericQuestions} next={submit} addAnswer={addAnswer} />}
+            {phase === 'other' && <OtherPhase questions={numericQuestions} next={submit} addAnswer={addAnswer} />}
           </Stack>
         </CardContent>
       </Card>
@@ -141,7 +168,7 @@ const HealthProblemsPhase: React.FC<PhaseProps & { questions: Question[] }> = ({
   )
 }
 
-const OtherConditionsPhase: React.FC<PhaseProps & { questions: Question[] }> = ({ next, questions, addAnswer }) => {
+const GeneralHealthPhase: React.FC<PhaseProps & { questions: Question[] }> = ({ next, questions, addAnswer }) => {
   return (
     <Stack spacing={4}>
       <Stack spacing={2}>
@@ -158,14 +185,12 @@ const OtherConditionsPhase: React.FC<PhaseProps & { questions: Question[] }> = (
   )
 }
 
-const GeneralPhase: React.FC<PhaseProps & { questions: Question[] }> = ({ next, questions, addAnswer }) => {
+const OtherPhase: React.FC<PhaseProps & { questions: Question[] }> = ({ next, questions, addAnswer }) => {
   return (
     <Stack spacing={4}>
       <Stack spacing={2}>
         <Stack spacing={4}>
-          {questions.map((question) => (
-            <QuestionBase addAnswer={addAnswer} key={question.id} question={question} />
-          ))}
+          <TextField multiline label="If you have any other comments feel free to write them here" rows={5} />
         </Stack>
       </Stack>
       <Button onClick={next} fullWidth size="large" variant="contained">

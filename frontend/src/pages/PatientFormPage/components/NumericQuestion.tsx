@@ -10,7 +10,7 @@ interface BooleanQuestionProps {
   addAnswer: AddAnswerFn
 }
 
-export const NumericQuestion: React.FC<BooleanQuestionProps> = ({ question }) => {
+export const NumericQuestion: React.FC<BooleanQuestionProps> = ({ question, addAnswer }) => {
   const [value, setValue] = useState<number | null>(null)
 
   return (
@@ -21,6 +21,7 @@ export const NumericQuestion: React.FC<BooleanQuestionProps> = ({ question }) =>
           <QuestionButton
             selected={value === i}
             onClick={() => {
+              addAnswer(question, { numericResponse: i })
               setValue(i)
             }}
           >

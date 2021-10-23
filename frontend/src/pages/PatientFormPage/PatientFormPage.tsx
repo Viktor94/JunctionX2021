@@ -6,12 +6,7 @@ import { useQuery } from 'react-query'
 import { PatientForm } from './components/PatientForm'
 
 export const PatientFomePage: React.FC = () => {
-  const { data } = useQuery(['patient', 1], async () => {
-    const res = await api.questions.getAllQuestions()
-    res.data.push({ id: 123, description: 'In general, would you say your health is?', questionType: 'NUMERIC' })
-    res.data.push({ id: 1234, description: 'Comments', questionType: 'TEXT' })
-    return res
-  })
+  const { data } = useQuery(['patient', 1], () => api.users.getPatient(1))
 
   if (!data) {
     return (
@@ -27,7 +22,7 @@ export const PatientFomePage: React.FC = () => {
 
   return (
     <PatientPageBase>
-      <PatientForm questions={data.data} />
+      <PatientForm questions={data.data.questions!} />
     </PatientPageBase>
   )
 }
