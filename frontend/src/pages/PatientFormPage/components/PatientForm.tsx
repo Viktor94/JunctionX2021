@@ -154,7 +154,7 @@ const IntroPhase: React.FC<PhaseProps> = ({ next }) => {
       <Stack spacing={4} textAlign="center" alignItems="center">
         <Box display="inline-block" width="300px" height="212px" component="img" src={illustrationImg} alt="" />
         <Typography>
-          This survey will take around <strong>20 minutes</strong> to complete.
+          This survey will take around <strong>5 minutes</strong> to complete.
         </Typography>
         <Typography>
           There are no right or wrong answers, so please respond by giving the answer that best describes your
