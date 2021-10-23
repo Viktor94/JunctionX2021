@@ -10,7 +10,7 @@ interface FollowUpItemProps {
 
 export const FollowUpItem: React.FC<FollowUpItemProps> = ({ title, deadline }) => {
   return (
-    <LinkCard to="/form">
+    <LinkCard to="/follow-up">
       <CardContent>
         <Stack direction="row" spacing={4} alignItems="center" justifyContent="space-between">
           <Typography>{title}</Typography>

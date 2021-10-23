@@ -14,7 +14,7 @@ export const Router: React.FC = () => {
     <BrowserRouter>
       <Switch>
         <Route path="/" exact render={() => <PatientHomePage />} />
-        <Route path="/form" exact render={() => <PatientFomePage />} />
+        <Route path="/follow-up" exact render={() => <PatientFomePage />} />
         <Route path="/signup" exact render={() => <PatientSignUpPage />} />
         <Route path="/login" exact render={() => <PatientLogInPage />} />
         <Route path="/admin" exact render={() => <CareTakerHomePage />} />
