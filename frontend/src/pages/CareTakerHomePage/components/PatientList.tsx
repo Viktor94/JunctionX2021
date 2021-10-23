@@ -28,7 +28,7 @@ export const PatientList: React.FC = () => {
   return (
     <Stack spacing={6}>
       <Stack spacing={3}>
-        <Typography variant="h6">Patients waiting for review</Typography>
+        <Typography style={{ fontWeight: 600 }}>Patients waiting for review</Typography>
         <Stack spacing={1}>
           <PatientListHeader />
           <Stack spacing={2}>
@@ -39,7 +39,7 @@ export const PatientList: React.FC = () => {
         </Stack>
       </Stack>
       <Stack spacing={3}>
-        <Typography variant="h6">Medium priority patients</Typography>
+        <Typography style={{ fontWeight: 600 }}>Medium priority patients</Typography>
         <Stack spacing={1}>
           <PatientListHeader />
           <Stack spacing={2}>
@@ -50,7 +50,7 @@ export const PatientList: React.FC = () => {
         </Stack>
       </Stack>
       <Stack spacing={3}>
-        <Typography variant="h6">Low priority patients</Typography>
+        <Typography style={{ fontWeight: 600 }}>Low priority patients</Typography>
         <Stack spacing={1}>
           <PatientListHeader />
           <Stack spacing={2}>
