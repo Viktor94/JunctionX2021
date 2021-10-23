@@ -25,7 +25,7 @@ public class UserController {
   }
 
   @GetMapping("/{userID}")
-  public ResponseEntity<?> getCarePlanForm(@PathVariable Long userID) {
+  public ResponseEntity<Patient> getPatient(@PathVariable Long userID) {
     Patient patient = (Patient) userService.getById(userID);
 
     return ResponseEntity.ok(patient);

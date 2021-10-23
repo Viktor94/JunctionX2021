@@ -3,10 +3,14 @@ export interface Answer {
   id?: number
   patient?: Patient
   question?: Question
-  response?: boolean
+  yesNoResponse?: boolean
+
+  /** @format int32 */
+  numericResponse?: number
+  textResponse?: string
 
   /** @format date */
-  occurrenceDate?: string
+  answerDate?: string
 }
 
 export interface CarePlanForm {
@@ -44,7 +48,6 @@ export interface Patient {
   /** @format date */
   dateOfBirth?: string
   role?: 'PATIENT' | 'CARE_TAKER'
-  careTakerList?: User[]
   carePlanFormList?: CarePlanForm[]
   primaryCareProvider?: string
   surgeon?: string
@@ -95,20 +98,8 @@ export interface Question {
     | 'BLADDER_IRRITATION'
     | 'SEXUAL_PROBLEMS'
     | 'FERTILITY'
+  questionType?: 'YES_NO' | 'NUMERIC' | 'TEXT'
   description?: string
-}
-
-export interface User {
-  /** @format int64 */
-  id?: number
-  email?: string
-  password?: string
-  fullName?: string
-  phoneNumber?: string
-
-  /** @format date */
-  dateOfBirth?: string
-  role?: 'PATIENT' | 'CARE_TAKER'
 }
 
 export interface RegistrationPayload {
@@ -262,11 +253,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @tags user-controller
-     * @name GetCarePlanForm
+     * @name GetPatient
      * @request GET:/users/{userID}
      */
-    getCarePlanForm: (userId: number, params: RequestParams = {}) =>
-      this.request<object, any>({
+    getPatient: (userId: number, params: RequestParams = {}) =>
+      this.request<Patient, any>({
         path: `/users/${userId}`,
         method: 'GET',
         ...params,
@@ -291,12 +282,12 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @tags care-plan-form-controller
-     * @name SaveCarePlanForm
-     * @request POST:/care-plan-form/
+     * @name SubmitForm
+     * @request POST:/care-plan-form/{patientId}
      */
-    saveCarePlanForm: (data: CarePlanForm, params: RequestParams = {}) =>
+    submitForm: (patientId: number, data: CarePlanForm, params: RequestParams = {}) =>
       this.request<object, any>({
-        path: `/care-plan-form/`,
+        path: `/care-plan-form/${patientId}`,
         method: 'POST',
         body: data,
         type: ContentType.Json,
