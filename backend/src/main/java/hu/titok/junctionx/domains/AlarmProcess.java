@@ -8,15 +8,16 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter
 @Setter
 public class AlarmProcess {
-
+  
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  @Column(name = "id", length = 250)
+  @Column(length = 250)
   private Long id;
 
   @Enumerated(EnumType.STRING)
@@ -26,9 +27,9 @@ public class AlarmProcess {
   private CancerType cancerType;
 
   private int frequency;
-
-  @Enumerated(EnumType.STRING)
-  private Instruction instructions;
+  
+  @Convert(converter = InstructionListConverter.class)
+  private List<Instruction> instructions;
 
   @Enumerated(EnumType.STRING)
   private Urgency urgency;
