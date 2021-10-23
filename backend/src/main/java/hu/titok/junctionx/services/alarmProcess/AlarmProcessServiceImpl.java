@@ -77,17 +77,18 @@ public class AlarmProcessServiceImpl implements AlarmProcessService {
                     user,
                     statusReports.stream().map(StatusReport::getMessage).collect(Collectors.toList()));
             log.info("Email sent!");
-            statusReports.add(new StatusReport(Urgency.LOW, "An email was sent to your care team and close relatives!"));
+            if (statusReports.isEmpty())
+                statusReports.add(new StatusReport(Urgency.LOW, "An email was sent to your care team and close relatives!"));
         }
         if (shouldRaisePatientPriority) {
             var patient = (Patient) user;
             patient.setPriority(Priority.HIGH);
             userService.save(patient);
-            statusReports.add(new StatusReport(Urgency.MEDIUM, "Your care team has been notified!"));
+            if (statusReports.isEmpty())
+                statusReports.add(new StatusReport(Urgency.MEDIUM, "Your care team has been notified!"));
         }
-        if (statusReports.isEmpty()) {
+        if (statusReports.isEmpty())
             statusReports.add(new StatusReport(Urgency.LOW, "No immediate action is necessary!"));
-        }
         return statusReports;
     }
 }
