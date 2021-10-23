@@ -1,17 +1,17 @@
 package hu.titok.junctionx.domains;
 
 import hu.titok.junctionx.domains.enums.Priority;
+import hu.titok.junctionx.domains.enums.Role;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Getter
 @Setter
+@DiscriminatorValue("Patient")
 public class Patient extends User {
 
   @ManyToMany private List<User> careTakerList;
@@ -21,6 +21,7 @@ public class Patient extends User {
   private String surgeon;
   private String radiationOncologist;
   private String medicalOncologist;
+  @Enumerated(EnumType.STRING)
   private Priority priority;
 
   private String relativeName;
@@ -34,6 +35,6 @@ public class Patient extends User {
   }
 
   public Patient() {
-    super();
+    super(Role.PATIENT);
   }
 }

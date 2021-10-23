@@ -13,6 +13,7 @@ import java.util.UUID;
 @Getter
 @NoArgsConstructor
 public class RegistrationToken {
+
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name = "token_id", length = 250)
