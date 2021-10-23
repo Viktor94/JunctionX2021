@@ -2,9 +2,10 @@ package hu.titok.junctionx.services.Careplan;
 
 import hu.titok.junctionx.domains.CarePlanForm;
 import hu.titok.junctionx.domains.Patient;
+import hu.titok.junctionx.pojos.StatusReport;
 import hu.titok.junctionx.repositories.AnswerRepository;
 import hu.titok.junctionx.repositories.CarePlanFormRepository;
-import hu.titok.junctionx.repositories.UserRepository;
+import hu.titok.junctionx.services.alarmProcess.AlarmProcessService;
 import hu.titok.junctionx.services.users.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,9 +21,10 @@ public class CarePlanFormServiceImpl implements CarePlanFormService {
   private final CarePlanFormRepository carePlanFormRepository;
   private final AnswerRepository answerRepository;
   private final UserService userService;
+  private final AlarmProcessService alarmProcessService;
 
   @Override
-  public void submitForm(long patientId, CarePlanForm carePlanForm) {
+  public List<StatusReport> submitForm(long patientId, CarePlanForm carePlanForm) {
     var patient = (Patient) userService.getById(patientId);
     carePlanForm.setDateOfSubmit(OffsetDateTime.now());
     carePlanForm.setPatient(patient);
@@ -32,8 +34,11 @@ public class CarePlanFormServiceImpl implements CarePlanFormService {
       answer.setAnswerDate(LocalDate.now());
     }
     answerRepository.saveAll(answers);
+    answerRepository.flush();
     carePlanFormRepository.save(carePlanForm);
     setBloodPressureStatus(carePlanForm.getId());
+    
+    return alarmProcessService.manageSymptom(patient, answers);
   }
 
   @Override

@@ -1,6 +1,8 @@
 package hu.titok.junctionx.services.answers;
 
 import hu.titok.junctionx.domains.Answer;
+import hu.titok.junctionx.domains.enums.CancerType;
+import hu.titok.junctionx.domains.enums.SymptomType;
 import hu.titok.junctionx.repositories.AnswerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,4 +38,12 @@ public class AnswerServiceImpl implements AnswerService {
   public List<Answer> getAll() {
     return answerRepository.findAll();
   }
+  
+  @Override
+  public int countSignificantYesNoAnswers(
+          boolean yesNoResponse, long patientId, CancerType cancerType, SymptomType symptomType) {
+    return answerRepository.countAnswersByYesNoResponseAndPatientIdAndQuestionCancerTypeAndQuestionSymptomType(
+            yesNoResponse, patientId, cancerType, symptomType);
+  }
+  
 }
