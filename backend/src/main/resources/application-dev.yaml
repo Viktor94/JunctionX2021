@@ -1,0 +1,7 @@
+app:
+  auth:
+    tokenSecret: "mogyika"
+  email:
+    emailUsername: ""
+    emailPassword: ""
+    senderEmail: "info@ateam.com"
