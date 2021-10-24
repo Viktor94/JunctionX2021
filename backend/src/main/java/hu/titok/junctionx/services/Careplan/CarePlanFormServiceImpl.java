@@ -30,9 +30,11 @@ public class CarePlanFormServiceImpl implements CarePlanFormService {
     carePlanForm.setDateOfSubmit(OffsetDateTime.now());
     carePlanForm.setPatient(patient);
     var answers = carePlanForm.getAnswers();
+    carePlanFormRepository.save(carePlanForm);
     for (var answer : answers) {
       answer.setPatient(patient);
       answer.setAnswerDate(LocalDate.now());
+      answer.setForm(carePlanForm);
     }
     answerRepository.saveAll(answers);
     answerRepository.flush();
@@ -70,7 +72,7 @@ public class CarePlanFormServiceImpl implements CarePlanFormService {
       statusReport = new StatusReport(Urgency.LOW, "Your blood pressure is slightly elevated, monitor it to be safe.");
     } else if (between(systolic, 130, 139) || between(diastolic, 80, 89)) {
       carePlanForm.setBloodPressureStatus(("HIGH BLOOD PRESSURE STAGE 1"));
-      statusReport = new StatusReport(Urgency.LOW, "Your blood pressure is elevated. Contact your care team or a healthcare professional!");
+      statusReport = new StatusReport(Urgency.MEDIUM, "Your blood pressure is elevated. Contact your care team or a healthcare professional!");
     } else if (between(systolic, 140, 90) || between(diastolic, 90, 119)) {
       carePlanForm.setBloodPressureStatus("HIGH BLOOD PRESSURE STAGE 2");
       statusReport = new StatusReport(Urgency.HIGH, "Your blood pressure is high. Seek medical help!");
