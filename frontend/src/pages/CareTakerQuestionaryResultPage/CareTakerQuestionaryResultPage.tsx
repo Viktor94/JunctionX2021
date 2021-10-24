@@ -14,6 +14,10 @@ export const CareTakerQuestionaryResultPage: React.FC = () => {
   const { id, questionaryId } = useParams<{ id: string; questionaryId: string }>()
   const { data, status } = useQuery('patients', () => api.users.getAllPatients())
 
+  React.useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }, [])
+
   if (!data) {
     return <CircularProgress />
   }

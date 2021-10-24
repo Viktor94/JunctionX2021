@@ -16,6 +16,10 @@ import { LineChart, CartesianGrid, YAxis, XAxis, Tooltip, Legend, Line } from 'r
 export const CareTakerPatientPage: React.FC = () => {
   const { id } = useParams<{ id: string }>()
 
+  React.useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }, [])
+
   const { data, status } = useQuery('patients', () => api.users.getAllPatients())
 
   if (!data) {
